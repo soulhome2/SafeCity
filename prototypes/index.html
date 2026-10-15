@@ -1,0 +1,2634 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>СРВИ «Безопасный город» — рабочее место оператора</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+    /* ===== Словарь ONE PSIM (как theme/one-psim.css в проекте IM) ===== */
+    :root,
+    [data-theme="light"] {
+      --one-font-ui: Inter, Roboto, "Segoe UI", sans-serif;
+      --one-font-mono: "Roboto Mono", Consolas, monospace;
+      --one-canvas: #F7F7F7;
+      --one-surface: #FFFFFF;
+      --one-surface-muted: #F0F0F1;
+      --one-surface-subtle: #E7E7E9;
+      --one-popup: #FFFFFF;
+      --one-dialog: #F7F7F7;
+      --one-fg: #212228;
+      --one-fg-muted: #6A6B71;
+      --one-fg-subtle: #767780;
+      --one-fg-disabled: #A3A4AB;
+      --one-border: #8E8F96;
+      --one-border-strong: #6E6F77;
+      --one-control-bg: #F0F0F1;
+      --one-control-hover: #E7E7E9;
+      --one-control-pressed: #DCDCDF;
+      --one-control-disabled: #F2F2F3;
+      --one-selected-neutral: #DDE3EA;
+      --one-editor-bg: #FFFFFF;
+      --one-accent: #0070E4;
+      --one-accent-hover: #0055AF;
+      --one-accent-on: #FFFFFF;
+      --one-accent-soft: #DCEBFA;
+      --one-primary-hover: #1A7EE7;
+      --one-primary-pressed: #0055AF;
+      --one-info: #0070E4;
+      --one-info-bg: #DDEBF9;
+      --one-info-text: #14385D;
+      --one-info-icon: #0070E4;
+      --one-success-bg: #E1F7DD;
+      --one-success-text: #1E5714;
+      --one-success-icon: #137F00;
+      --one-warning: #FF8A00;
+      --one-warning-bg: #FDEEDD;
+      --one-warning-text: #664014;
+      --one-warning-icon: #995300;
+      --one-danger: #D01A1A;
+      --one-danger-bg: #F7E0E0;
+      --one-danger-text: #561C1C;
+      --one-danger-icon: #D01A1A;
+      --one-focus-ring: #0070E4;
+      --one-focus-halo: rgba(0, 112, 228, 0.32);
+      --one-scrim: rgba(0, 0, 0, 0.32);
+      --one-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 10px rgba(0, 0, 0, 0.08);
+      --one-radius-control: 4px;
+      --one-radius-container: 6px;
+      --one-radius-window: 8px;
+      --one-type-heading-sm: 600 14px/20px var(--one-font-ui);
+      --one-type-heading-md: 600 16px/24px var(--one-font-ui);
+      --one-palette-burnt-orange: #D07100;
+      --one-palette-orange: #FF8A00;
+      --one-palette-lavender: #B25AFF;
+      --one-palette-grape: #7D3FB3;
+      --stroke: var(--one-surface-subtle);
+      color-scheme: light;
+    }
+    [data-theme="dark"] {
+      --one-canvas: #141517;
+      --one-surface: #1F2024;
+      --one-surface-muted: #242529;
+      --one-surface-subtle: #28292D;
+      --one-popup: #303136;
+      --one-dialog: #292A2E;
+      --one-fg: #F6F6F6;
+      --one-fg-muted: #B4B4B4;
+      --one-fg-subtle: #8C8C8C;
+      --one-fg-disabled: #6E6E6E;
+      --one-border: #3A3B40;
+      --one-border-strong: #92939A;
+      --one-control-bg: #323338;
+      --one-control-hover: #3B3C41;
+      --one-control-pressed: #44454A;
+      --one-control-disabled: #252629;
+      --one-selected-neutral: #2D3946;
+      --one-editor-bg: #37383D;
+      --one-accent-soft: #123252;
+      --one-info-bg: #06182B;
+      --one-info-text: #ADD1F6;
+      --one-success-bg: #0B2707;
+      --one-success-text: #B7F0AD;
+      --one-success-icon: #20D300;
+      --one-warning-bg: #2E1C07;
+      --one-warning-text: #FFD9AD;
+      --one-warning-icon: #FF8A00;
+      --one-danger: #FF5A5A;
+      --one-danger-bg: #2E1415;
+      --one-danger-text: #FFCACA;
+      --one-danger-icon: #FF5A5A;
+      --one-focus-ring: #0082F7;
+      --one-focus-halo: rgba(0, 130, 247, 0.40);
+      --one-scrim: rgba(0, 0, 0, 0.6);
+      --one-shadow: 0 1px 2px rgba(0, 0, 0, 0.24), 0 4px 10px rgba(0, 0, 0, 0.20);
+      --stroke: var(--one-border);
+      color-scheme: dark;
+    }
+
+    /* ===== Переменные прототипа поверх словаря (как bridge.css в IM) ===== */
+    :root, [data-theme="light"], [data-theme="dark"] {
+      --font: var(--one-font-ui);
+      --bg: var(--one-canvas);
+      --panel: var(--one-surface);
+      --panel-2: var(--one-surface-muted);
+      --hover: var(--one-control-hover);
+      --text: var(--one-fg);
+      --muted: var(--one-fg-muted);
+      --faint: var(--one-fg-subtle);
+      --stroke-2: var(--one-border);
+      --accent: var(--one-accent);
+      --accent-dim: var(--one-accent-soft);
+      --on-accent: var(--one-accent-on);
+      --crit: var(--one-danger);
+      --warn-text: var(--one-warning-icon);
+      --ok: var(--one-success-icon);
+      --radius: var(--one-radius-window);
+      --radius-sm: var(--one-radius-container);
+      --video-bg: #0b0c0e;
+      --hud: #e8eaed;
+      /* перехват СРВИ — фиолетовый акцент палитры, чтобы не путать с тревогой */
+      --srvi: color-mix(in srgb, var(--one-fg) 45%, var(--one-palette-lavender));
+      --srvi-bg: color-mix(in srgb, var(--one-palette-lavender) 16%, var(--one-surface));
+      --srvi-solid: var(--one-palette-grape);
+    }
+    [data-theme="dark"] {
+      --srvi: color-mix(in srgb, var(--one-fg) 55%, var(--one-palette-lavender));
+      --srvi-bg: color-mix(in srgb, var(--one-palette-grape) 30%, var(--one-surface));
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--font);
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text);
+      background: var(--bg);
+      overflow: hidden;
+    }
+    button, input, select, textarea { font-family: inherit; font-size: inherit; }
+    button { cursor: pointer; color: inherit; }
+    .material-symbols-outlined { font-size: 20px; line-height: 1; user-select: none; }
+
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea {
+      background: var(--one-editor-bg);
+      color: var(--text);
+      border: 1px solid var(--stroke-2);
+      border-radius: var(--radius-sm);
+      outline: none;
+      padding: 7px 10px;
+      width: 100%;
+    }
+    textarea { min-height: 64px; resize: vertical; }
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      padding-right: 32px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238c8c8c' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 16px 16px;
+    }
+    input::placeholder, textarea::placeholder { color: var(--faint); }
+    :focus-visible { outline: 2px solid var(--one-focus-ring); outline-offset: 2px; }
+    input:focus-visible, select:focus-visible, textarea:focus-visible { border-color: var(--one-border-strong); }
+    input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); width: 16px; height: 16px; }
+
+    /* ===== Каркас ===== */
+    .app {
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      background: var(--panel);
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 20px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--stroke);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 230px; }
+    .brand-mark {
+      width: calc(32px * 34.6406 / 40);
+      height: 32px;
+      color: var(--faint);
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34.6406 40'%3E%3Cpath d='M34.6406 10V30L17.3203 40L0 30V10L17.3203 0L34.6406 10ZM3 11.7314V28.2676L17.3203 36.5361L31.6406 28.2676V11.7314L17.3203 3.46289L3 11.7314Z' fill='currentColor'/%3E%3C/svg%3E") center / contain no-repeat;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34.6406 40'%3E%3Cpath d='M34.6406 10V30L17.3203 40L0 30V10L17.3203 0L34.6406 10ZM3 11.7314V28.2676L17.3203 36.5361L31.6406 28.2676V11.7314L17.3203 3.46289L3 11.7314Z' fill='currentColor'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+    .brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .brand-text strong { font-size: 16px; font-weight: 600; }
+    .brand-text span { font-size: 12px; font-weight: 500; color: var(--faint); }
+
+    .topbar-cluster {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+      padding-left: 16px;
+      border-left: 1px solid var(--stroke);
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--one-fg);
+      font-weight: 500;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .nav-btn:hover { background: var(--one-control-hover); }
+    .nav-btn.active { background: var(--one-selected-neutral); }
+    .nav-btn .material-symbols-outlined { font-size: 19px; color: var(--muted); }
+    .nav-btn.active .material-symbols-outlined { color: var(--text); }
+    .nav-count {
+      min-width: 18px;
+      padding: 0 5px;
+      border-radius: 9px;
+      background: var(--srvi-bg);
+      color: var(--srvi);
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 18px;
+      text-align: center;
+    }
+
+    .topbar-actions { display: flex; align-items: center; gap: 8px; }
+    .lang {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      height: 34px;
+      padding: 0 8px 0 6px;
+      border: 1px solid var(--stroke-2);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--muted);
+    }
+    .lang:hover { border-color: var(--one-border-strong); color: var(--text); }
+    .lang .material-symbols-outlined { font-size: 19px; }
+    .lang select {
+      border: 0;
+      padding: 0 18px 0 0;
+      width: auto;
+      background-color: transparent;
+      background-position: right 0 center;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: transparent;
+      color: var(--one-fg-muted);
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .icon-btn:hover:not(:disabled) { background: var(--one-control-hover); color: var(--one-fg); }
+    .icon-btn:active:not(:disabled) { background: var(--one-control-pressed); }
+    .icon-btn:disabled { color: var(--one-fg-disabled); cursor: not-allowed; }
+    .icon-btn.on { background: var(--one-accent); color: var(--one-accent-on); }
+    .theme-icon { width: 21px; height: 21px; transition: transform 0.35s ease; }
+    [data-theme="light"] .theme-icon { transform: rotate(180deg); }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 8px 4px 12px;
+      margin-left: 4px;
+      border: none;
+      border-left: 1px solid var(--stroke);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      background: transparent;
+      text-align: left;
+    }
+    .user-btn:hover { background: var(--hover); }
+    .user-meta { display: flex; flex-direction: column; line-height: 1.2; }
+    .user-meta strong { font-size: 13px; font-weight: 600; }
+    .user-meta span { font-size: 12px; font-weight: 500; color: var(--faint); }
+    .role-pill {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 50px;
+      background: var(--srvi-bg);
+      color: var(--srvi);
+      white-space: nowrap;
+    }
+    .clock { font-size: 13px; font-weight: 500; min-width: 64px; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+    .menu { position: relative; }
+    .menu-pop {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      z-index: 40;
+      min-width: 260px;
+      padding: 6px;
+      background: var(--one-popup);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: 0 16px 40px var(--one-scrim);
+    }
+    .menu-label { padding: 8px 10px 4px; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 8px 10px;
+      border: 0;
+      border-radius: var(--one-radius-control);
+      background: transparent;
+      text-align: left;
+      font-size: 13px;
+    }
+    .menu-item:hover { background: var(--one-control-hover); }
+    .menu-item.checked { background: var(--one-accent); color: var(--one-accent-on); }
+    .menu-item small { margin-left: auto; color: inherit; opacity: 0.75; font-size: 12px; }
+    .menu-sep { height: 1px; margin: 6px 4px; background: var(--stroke); }
+    .menu-hint { padding: 4px 10px 8px; font-size: 12px; color: var(--muted); }
+
+    .contour-strip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 20px;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--srvi-bg);
+      color: var(--srvi);
+      border-bottom: 1px solid var(--stroke);
+    }
+    .contour-strip .material-symbols-outlined { font-size: 16px; }
+    .contour-strip .sep { opacity: 0.5; }
+
+    .workspace { min-height: 0; background: var(--stroke); display: grid; gap: 1px; }
+    .workspace[data-view="monitor"] { grid-template-columns: 300px minmax(420px, 1fr) 360px; }
+    .workspace:not([data-view="monitor"]) { grid-template-columns: minmax(0, 1fr); }
+    .view { display: none; min-width: 0; min-height: 0; }
+    .workspace[data-view="monitor"] .view-monitor { display: contents; }
+    .workspace[data-view="intercepts"] .view-intercepts,
+    .workspace[data-view="jobs"] .view-jobs,
+    .workspace[data-view="audit"] .view-audit { display: flex; }
+
+    .panel { background: var(--panel); min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+    .panel.page { flex: 1; overflow: auto; }
+    .panel-h {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--stroke);
+    }
+    .panel-h h2 { font: var(--one-type-heading-sm); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .panel-h h2 em { font-style: normal; color: var(--muted); font-weight: 500; margin-left: 6px; }
+    .panel-h-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .panel-b { flex: 1; min-height: 0; overflow: auto; }
+    .panel-b::-webkit-scrollbar { width: 10px; height: 10px; }
+    .panel-b::-webkit-scrollbar-thumb { background: var(--one-surface-subtle); border-radius: 6px; border: 2px solid var(--panel); }
+    .muted { color: var(--muted); }
+    .faint { color: var(--faint); }
+
+    .seg {
+      display: inline-flex;
+      padding: 2px;
+      gap: 2px;
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+    }
+    .seg button {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border: 0;
+      border-radius: var(--one-radius-control);
+      background: transparent;
+      color: var(--one-fg);
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .seg button .material-symbols-outlined { font-size: 17px; }
+    .seg button:hover:not(.active) { background: var(--one-control-hover); }
+    .seg button.active { background: var(--one-accent); color: var(--one-accent-on); }
+    .seg button.active:hover { background: var(--one-primary-hover); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--one-fg);
+      font-weight: 500;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .btn .material-symbols-outlined { font-size: 18px; }
+    .btn:hover:not(:disabled) { background: var(--one-control-hover); }
+    .btn:active:not(:disabled) { background: var(--one-control-pressed); }
+    .btn.small { padding: 4px 10px; font-size: 12px; }
+    .btn.primary { background: var(--one-accent); color: var(--one-accent-on); border-color: var(--one-accent); }
+    .btn.primary:hover:not(:disabled) { background: var(--one-primary-hover); border-color: var(--one-primary-hover); }
+    .btn.primary:active:not(:disabled) { background: var(--one-primary-pressed); }
+    .btn.outline { border-color: var(--one-border); }
+    .btn.srvi { background: var(--srvi-solid); color: #fff; border-color: var(--srvi-solid); }
+    .btn.srvi:hover:not(:disabled) { background: color-mix(in srgb, var(--srvi-solid) 85%, #fff); }
+    .btn.danger { color: var(--crit); border-color: var(--one-border); }
+    .btn:disabled { color: var(--one-fg-disabled); cursor: not-allowed; }
+    .btn.primary:disabled, .btn.srvi:disabled { background: var(--one-control-disabled); border-color: var(--one-border); color: var(--one-fg-disabled); }
+    .btn.block { width: 100%; }
+
+    .search-wrapper { position: relative; }
+    .search-wrapper > .material-symbols-outlined {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--faint);
+      pointer-events: none;
+    }
+    .search-wrapper input { padding-left: 36px !important; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 1px 8px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 18px;
+      white-space: nowrap;
+    }
+    .badge .material-symbols-outlined { font-size: 13px; }
+    .badge.ok { background: var(--one-success-bg); color: var(--one-success-text); }
+    .badge.warn { background: var(--one-warning-bg); color: var(--one-warning-text); }
+    .badge.crit { background: var(--one-danger-bg); color: var(--one-danger-text); }
+    .badge.info { background: var(--one-info-bg); color: var(--one-info-text); }
+    .badge.srvi { background: var(--srvi-bg); color: var(--srvi); }
+    .badge.neutral { background: var(--panel-2); color: var(--muted); }
+
+    /* ===== Дерево объектов ===== */
+    .tree-tools { padding: 12px 12px 8px; display: flex; flex-direction: column; gap: 8px; }
+    .tree { list-style: none; padding: 0 8px 16px; }
+    .seg-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 8px 4px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+    .seg-title .material-symbols-outlined { font-size: 15px; }
+    .site-row, .cam-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      border: 0;
+      background: transparent;
+      text-align: left;
+      border-radius: var(--one-radius-control);
+    }
+    .site-row { padding: 7px 8px; font-weight: 500; }
+    .site-row:hover, .cam-row:hover { background: var(--one-control-hover); }
+    .site-row .chev { font-size: 18px; color: var(--faint); transition: transform 0.15s ease; }
+    .site.open .site-row .chev { transform: rotate(90deg); }
+    .site-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .site-meta { display: flex; align-items: center; gap: 6px; padding: 0 8px 6px 34px; font-size: 11px; color: var(--muted); }
+    .bar { flex: 1; height: 4px; border-radius: 2px; background: var(--one-surface-subtle); overflow: hidden; }
+    .bar i { display: block; height: 100%; background: var(--accent); border-radius: 2px; }
+    .bar.warn i { background: var(--one-warning); }
+    .bar.crit i { background: var(--crit); }
+    .cams { list-style: none; display: none; padding-bottom: 6px; }
+    .site.open .cams { display: block; }
+    .cam-row { padding: 5px 8px 5px 34px; font-size: 13px; color: var(--text); }
+    .cam-row .material-symbols-outlined { font-size: 18px; color: var(--muted); }
+    .cam-row.selected { background: var(--one-selected-neutral); }
+    .cam-row.in-layout .cam-name::after { content: " •"; color: var(--accent); }
+    .cam-row:disabled { color: var(--one-fg-disabled); cursor: default; }
+    .cam-row:disabled:hover { background: transparent; }
+    .cam-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--ok); }
+    .dot.warn { background: var(--one-warning); }
+    .dot.off { background: var(--one-fg-disabled); }
+
+    /* ===== Раскладка ===== */
+    .stage-body { display: flex; flex-direction: column; background: var(--video-bg); }
+    .grid {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      gap: 4px;
+      padding: 4px;
+    }
+    .grid[data-layout="1"] { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+    .grid[data-layout="4"] { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
+    .grid[data-layout="9"] { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); }
+    .tile {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      border-radius: 4px;
+      background: #15171b;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      color: var(--hud);
+      text-align: left;
+    }
+    .tile.selected { outline: 2px solid var(--one-accent); outline-offset: -2px; }
+    .tile .scene { position: absolute; inset: 0; width: 100%; height: 100%; transition: transform 0.4s ease; }
+    .tile .scan {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 3px), radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.45));
+    }
+    .hud { position: absolute; left: 8px; right: 8px; display: flex; align-items: center; gap: 6px; font-size: 12px; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+    .hud.top { top: 8px; }
+    .hud.bottom { bottom: 8px; }
+    .hud .name { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .hud .tag {
+      padding: 1px 6px;
+      border-radius: 3px;
+      background: rgba(10, 11, 13, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      text-shadow: none;
+    }
+    .hud .tag.live { color: #7ee787; }
+    .hud .tag.arch { color: #ffd38a; }
+    .hud .tag.srvi { background: rgba(125, 63, 179, 0.85); border-color: rgba(178, 90, 255, 0.9); color: #fff; display: inline-flex; align-items: center; gap: 3px; }
+    .hud .tag.srvi .material-symbols-outlined { font-size: 12px; }
+    .hud .tag.low { color: #c9d1d9; }
+    .hud .spacer { flex: 1; }
+    .tile-empty { position: absolute; inset: 0; display: grid; place-items: center; color: #7d8590; font-size: 12px; text-align: center; padding: 12px; }
+    .tile-empty .material-symbols-outlined { font-size: 28px; display: block; margin: 0 auto 6px; }
+    .tile.empty { background: #101215; border: 1px dashed #2b2e33; }
+
+    .timeline {
+      flex-shrink: 0;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: var(--panel);
+      border-top: 1px solid var(--stroke);
+    }
+    .stage-body[data-mode="archive"] .timeline { display: flex; }
+    .tl-track { position: relative; flex: 1; height: 28px; cursor: pointer; }
+    .tl-rail { position: absolute; left: 0; right: 0; top: 11px; height: 6px; border-radius: 3px; background: var(--one-surface-subtle); }
+    .tl-rec { position: absolute; top: 11px; height: 6px; background: color-mix(in srgb, var(--accent) 70%, var(--panel)); border-radius: 3px; }
+    .tl-hidden {
+      position: absolute;
+      top: 7px;
+      height: 14px;
+      border-radius: 3px;
+      background: repeating-linear-gradient(45deg, var(--srvi-solid) 0 4px, color-mix(in srgb, var(--srvi-solid) 40%, transparent) 4px 8px);
+    }
+    .tl-cursor { position: absolute; top: 2px; width: 2px; height: 24px; margin-left: -1px; background: var(--one-warning); border-radius: 1px; }
+    .tl-ticks { position: absolute; left: 0; right: 0; bottom: -4px; display: flex; justify-content: space-between; font-size: 10px; color: var(--faint); pointer-events: none; }
+    .tl-time { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; min-width: 70px; }
+
+    /* ===== Карточка камеры ===== */
+    .side-tabs { padding: 10px 16px; border-bottom: 1px solid var(--stroke); }
+    .side-tabs .seg { width: 100%; }
+    .side-tabs .seg button { flex: 1; justify-content: center; }
+    .section { padding: 14px 16px; border-bottom: 1px solid var(--stroke); }
+    .section:last-child { border-bottom: 0; }
+    .section h3 { font: var(--one-type-heading-sm); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .section h3 .material-symbols-outlined { font-size: 18px; color: var(--muted); }
+    .kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 13px; }
+    .kv dt { color: var(--muted); }
+    .kv dd { text-align: right; font-weight: 500; }
+    .note {
+      display: flex;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .note .material-symbols-outlined { font-size: 18px; flex-shrink: 0; }
+    .note.info { background: var(--one-info-bg); color: var(--one-info-text); }
+    .note.warn { background: var(--one-warning-bg); color: var(--one-warning-text); }
+    .note.srvi { background: var(--srvi-bg); color: var(--srvi); }
+    .note.neutral { background: var(--panel-2); color: var(--muted); }
+    .note a, .link-btn { color: inherit; text-decoration: underline; cursor: pointer; background: none; border: 0; padding: 0; font: inherit; }
+    .stack { display: flex; flex-direction: column; gap: 10px; }
+    .row { display: flex; align-items: center; gap: 8px; }
+    .row.wrap { flex-wrap: wrap; }
+    .row.between { justify-content: space-between; }
+    .field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); font-weight: 500; }
+    .checks { display: flex; flex-direction: column; gap: 6px; }
+    .checks label, .radios label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); cursor: pointer; }
+    .radios { display: flex; flex-direction: column; gap: 8px; }
+    .radios label { align-items: flex-start; }
+    .radios label small { display: block; color: var(--muted); font-size: 12px; }
+
+    .ptz-pad { display: grid; grid-template-columns: repeat(3, 40px); grid-template-rows: repeat(3, 40px); gap: 4px; }
+    .ptz-pad .icon-btn { width: 40px; height: 40px; background: var(--panel-2); }
+    .ptz-pad .icon-btn:hover:not(:disabled) { background: var(--one-control-hover); }
+    .ptz-pad .center { background: transparent; color: var(--faint); font-size: 11px; display: grid; place-items: center; }
+    .ptz-side { display: flex; flex-direction: column; gap: 4px; }
+    .ptz-side .icon-btn { width: 40px; height: 40px; background: var(--panel-2); }
+    .presets { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      padding: 4px 10px;
+      border-radius: 50px;
+      border: 1px solid var(--one-border);
+      background: transparent;
+      font-size: 12px;
+    }
+    .chip:hover:not(:disabled) { background: var(--one-control-hover); }
+    .chip:disabled { color: var(--one-fg-disabled); cursor: not-allowed; }
+
+    .events { list-style: none; }
+    .event {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--stroke);
+      cursor: pointer;
+    }
+    .event:hover { background: color-mix(in srgb, var(--one-control-hover) 50%, var(--panel)); }
+    .event .ev-ico { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--panel-2); color: var(--muted); }
+    .event .ev-ico.hit { background: var(--one-danger-bg); color: var(--one-danger-icon); }
+    .event strong { display: block; font-size: 13px; }
+    .event span { font-size: 12px; color: var(--muted); }
+    .event time { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .plate {
+      display: inline-block;
+      padding: 0 6px;
+      margin-right: 4px;
+      border: 1px solid var(--one-border-strong);
+      border-radius: 3px;
+      font-family: var(--one-font-mono);
+      font-size: 12px;
+      color: var(--text) !important;
+      background: var(--panel-2);
+    }
+
+    /* ===== Таблицы ===== */
+    .page-inner { padding: 20px 24px; display: flex; flex-direction: column; gap: 20px; max-width: 1400px; width: 100%; }
+    .page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+    .page-head h1 { font: var(--one-type-heading-md); }
+    .page-head p { color: var(--muted); font-size: 13px; margin-top: 2px; max-width: 760px; }
+    .card { border: 1px solid var(--stroke); border-radius: var(--radius); background: var(--panel); overflow: hidden; }
+    .card-h { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--stroke); }
+    .card-h h2 { font: var(--one-type-heading-sm); display: flex; align-items: center; gap: 8px; }
+    .table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .table th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--faint);
+      padding: 8px 16px;
+      background: var(--panel-2);
+      white-space: nowrap;
+    }
+    .table td { padding: 10px 16px; border-top: 1px solid var(--stroke); vertical-align: middle; }
+    .table tr:hover td { background: color-mix(in srgb, var(--one-control-hover) 40%, var(--panel)); }
+    .table td .sub { display: block; font-size: 12px; color: var(--muted); }
+    .table .actions { text-align: right; white-space: nowrap; }
+    .table .mono { font-family: var(--one-font-mono); font-size: 12px; }
+    .empty-row td { text-align: center; color: var(--muted); padding: 24px; }
+    .progress { display: flex; align-items: center; gap: 8px; min-width: 160px; }
+    .progress .bar { height: 6px; }
+    .progress span { font-size: 12px; color: var(--muted); min-width: 34px; text-align: right; font-variant-numeric: tabular-nums; }
+    .no-access { margin: auto; text-align: center; color: var(--muted); max-width: 420px; padding: 40px; }
+    .no-access .material-symbols-outlined { font-size: 40px; display: block; margin: 0 auto 10px; color: var(--faint); }
+
+    /* ===== Строка состояния ===== */
+    .statusbar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 6px 20px;
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--panel-2);
+      border-top: 1px solid var(--stroke);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .statusbar span { display: inline-flex; align-items: center; gap: 5px; }
+    .statusbar .material-symbols-outlined { font-size: 15px; }
+    .statusbar .grow { flex: 1; }
+
+    /* ===== Диалоги и уведомления ===== */
+    .modal { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; background: var(--one-scrim); padding: 20px; }
+    .modal[hidden] { display: none; }
+    .modal-card {
+      width: min(520px, 100%);
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      background: var(--one-dialog);
+      border-radius: var(--radius);
+      box-shadow: 0 24px 60px var(--one-scrim);
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .modal-card.wide { width: min(860px, 100%); }
+    .modal-card h3 { font: var(--one-type-heading-md); }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .cam-picks { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; max-height: 160px; overflow: auto; padding: 8px; border: 1px solid var(--stroke); border-radius: var(--radius-sm); }
+    .site-view { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .site-view figure { display: flex; flex-direction: column; gap: 6px; }
+    .site-view figcaption { font-size: 12px; color: var(--muted); font-weight: 500; }
+    .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; padding: 3px; background: var(--video-bg); border-radius: var(--radius-sm); aspect-ratio: 16 / 10; }
+    .mini-grid .tile { cursor: default; }
+    .mini-grid .hud { font-size: 10px; left: 5px; right: 5px; }
+    .mini-grid .hud.top { top: 5px; }
+    .mini-grid .tile.swapped::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 2px dashed var(--one-warning);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    .req-table td:first-child { white-space: nowrap; font-weight: 600; }
+
+    .toast-stack { position: fixed; right: 20px; bottom: 44px; z-index: 70; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+    .toast {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      max-width: 420px;
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      background: var(--one-popup);
+      border: 1px solid var(--stroke);
+      box-shadow: var(--one-shadow);
+      font-size: 13px;
+      animation: toast-in 0.2s ease;
+    }
+    .toast .material-symbols-outlined { color: var(--srvi); }
+    .toast.ok .material-symbols-outlined { color: var(--ok); }
+    .toast.warn .material-symbols-outlined { color: var(--warn-text); }
+    @keyframes toast-in { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+    @keyframes drive { from { transform: translateX(-80px); } to { transform: translateX(400px); } }
+    @keyframes drive-back { from { transform: translateX(400px); } to { transform: translateX(-80px); } }
+    @keyframes walk { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(40px); } }
+    .mv-a { animation: drive 9s linear infinite; }
+    .mv-b { animation: drive-back 12s linear infinite; }
+    .mv-c { animation: walk 14s ease-in-out infinite; }
+    .paused .mv-a, .paused .mv-b, .paused .mv-c { animation-play-state: paused; }
+
+    @media (max-width: 1280px) {
+      .workspace[data-view="monitor"] { grid-template-columns: 260px minmax(380px, 1fr) 320px; }
+      .brand { min-width: 0; }
+      .brand-text span { display: none; }
+      .nav-btn .nav-label { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div class="brand-text">
+          <strong>СРВИ «Безопасный город»</strong>
+          <span>ITV · Интеллект X</span>
+        </div>
+      </div>
+
+      <nav class="topbar-cluster" id="nav" aria-label="Разделы">
+        <button type="button" class="nav-btn" data-view="monitor">
+          <span class="material-symbols-outlined">videocam</span>
+          <span class="nav-label">Мониторинг</span>
+        </button>
+        <button type="button" class="nav-btn" data-view="intercepts">
+          <span class="material-symbols-outlined">shield_lock</span>
+          <span class="nav-label">Перехваты</span>
+          <span class="nav-count" id="navInterceptCount">0</span>
+        </button>
+        <button type="button" class="nav-btn" data-view="jobs">
+          <span class="material-symbols-outlined">cloud_sync</span>
+          <span class="nav-label">Архив в СРВИ</span>
+        </button>
+        <button type="button" class="nav-btn" data-view="audit">
+          <span class="material-symbols-outlined">receipt_long</span>
+          <span class="nav-label">Журнал СРВИ</span>
+        </button>
+      </nav>
+
+      <div class="topbar-actions">
+        <label class="lang" for="langSelect">
+          <span class="material-symbols-outlined" aria-hidden="true">language</span>
+          <select id="langSelect" data-i18n-skip aria-label="Язык интерфейса" title="Язык интерфейса">
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+
+        <button type="button" class="icon-btn theme-btn" id="themeToggle" title="Тёмная тема" aria-label="Тёмная тема">
+          <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <g stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+              <path d="M12 1.4v2.4M12 20.2v2.4M1.4 12h2.4M20.2 12h2.4M4.4 4.4l1.7 1.7M17.9 17.9l1.7 1.7M19.6 4.4l-1.7 1.7M6.1 17.9l-1.7 1.7"/>
+            </g>
+            <circle cx="12" cy="12" r="5.7" fill="none" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M12 6.3a5.7 5.7 0 0 0 0 11.4z" fill="currentColor"/>
+          </svg>
+        </button>
+
+        <button type="button" class="icon-btn" id="helpBtn" title="О прототипе и покрытии требований" aria-label="О прототипе и покрытии требований">
+          <span class="material-symbols-outlined">help</span>
+        </button>
+
+        <div class="menu" id="userMenu">
+          <button type="button" class="user-btn" id="userBtn" aria-haspopup="menu" aria-expanded="false">
+            <span class="user-meta">
+              <strong>Смирнов А. В.</strong>
+              <span>ГУ МВД · дежурная часть</span>
+            </span>
+            <span class="role-pill" id="rolePill"></span>
+            <span class="material-symbols-outlined faint">expand_more</span>
+          </button>
+          <div class="menu-pop" role="menu" hidden>
+            <div class="menu-label">Роль в СРВИ (демо)</div>
+            <div id="roleItems"></div>
+            <p class="menu-hint">В продукте роль выдаёт администратор СРВИ. Переключатель нужен, чтобы показать, что видит каждая роль.</p>
+            <div class="menu-sep"></div>
+            <button type="button" class="menu-item" id="resetDemo">
+              <span class="material-symbols-outlined">restart_alt</span>
+              <span>Сбросить демо-данные</span>
+            </button>
+          </div>
+        </div>
+
+        <time class="clock" id="clock">00:00:00</time>
+      </div>
+    </header>
+
+    <div class="contour-strip">
+      <span class="material-symbols-outlined">verified_user</span>
+      <span>Закрытый контур СРВИ</span>
+      <span class="sep">·</span>
+      <span>Действия операторов СРВИ не видны администраторам и операторам объектов</span>
+    </div>
+
+    <main class="workspace" id="workspace" data-view="monitor">
+      <!-- ===== Мониторинг ===== -->
+      <div class="view view-monitor">
+        <section class="panel" id="panelSites">
+          <header class="panel-h">
+            <h2>Объекты мониторинга <em id="sitesCount"></em></h2>
+          </header>
+          <div class="tree-tools">
+            <div class="search-wrapper">
+              <span class="material-symbols-outlined">search</span>
+              <input type="search" id="treeSearch" placeholder="Поиск камеры или объекта..." />
+            </div>
+          </div>
+          <div class="panel-b">
+            <ul class="tree" id="tree"></ul>
+          </div>
+        </section>
+
+        <section class="panel" id="panelStage">
+          <header class="panel-h">
+            <h2 id="layoutTitle">Раскладка</h2>
+            <div class="panel-h-actions">
+              <div class="seg" id="layoutSeg" role="group" aria-label="Сетка раскладки">
+                <button type="button" data-layout="1" title="1 камера"><span class="material-symbols-outlined">crop_square</span></button>
+                <button type="button" data-layout="4" title="4 камеры"><span class="material-symbols-outlined">grid_view</span></button>
+                <button type="button" data-layout="9" title="9 камер"><span class="material-symbols-outlined">apps</span></button>
+              </div>
+              <div class="seg" id="modeSeg" role="group" aria-label="Режим видео">
+                <button type="button" data-mode="live">Живое видео</button>
+                <button type="button" data-mode="archive">Архив</button>
+              </div>
+            </div>
+          </header>
+          <div class="panel-b stage-body" id="stageBody" data-mode="live">
+            <div class="grid" id="grid" data-layout="4"></div>
+            <div class="timeline" id="timeline">
+              <button type="button" class="icon-btn" id="tlPlay" title="Воспроизвести" aria-label="Воспроизвести">
+                <span class="material-symbols-outlined">play_arrow</span>
+              </button>
+              <span class="tl-time" id="tlTime">--:--:--</span>
+              <div class="tl-track" id="tlTrack" title="Щёлкните, чтобы перейти к моменту архива">
+                <div class="tl-rail"></div>
+                <div id="tlSegments"></div>
+                <div class="tl-cursor" id="tlCursor"></div>
+                <div class="tl-ticks" id="tlTicks"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="panelSide">
+          <header class="panel-h">
+            <h2 id="sideTitle">Камера</h2>
+            <div class="panel-h-actions">
+              <span id="sideBadges"></span>
+            </div>
+          </header>
+          <div class="side-tabs">
+            <div class="seg" id="sideSeg" role="tablist">
+              <button type="button" data-tab="control">Управление</button>
+              <button type="button" data-tab="intercept">Перехват</button>
+              <button type="button" data-tab="events">События</button>
+            </div>
+          </div>
+          <div class="panel-b" id="sideBody"></div>
+        </section>
+      </div>
+
+      <!-- ===== Перехваты ===== -->
+      <div class="view view-intercepts">
+        <section class="panel page">
+          <div class="page-inner" id="interceptsPage"></div>
+        </section>
+      </div>
+
+      <!-- ===== Архив в СРВИ ===== -->
+      <div class="view view-jobs">
+        <section class="panel page">
+          <div class="page-inner" id="jobsPage"></div>
+        </section>
+      </div>
+
+      <!-- ===== Журнал СРВИ ===== -->
+      <div class="view view-audit">
+        <section class="panel page">
+          <div class="page-inner" id="auditPage"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="statusbar" id="statusbar"></footer>
+  </div>
+
+  <!-- Перехват архива -->
+  <div class="modal" id="modalArchive" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalArchiveTitle">
+      <h3 id="modalArchiveTitle">Перехват архива</h3>
+      <p class="muted" id="archiveCamLabel"></p>
+      <div class="grid2">
+        <label class="field">С
+          <input type="time" id="archFrom" step="60" />
+        </label>
+        <label class="field">По
+          <input type="time" id="archTo" step="60" />
+        </label>
+      </div>
+      <div class="radios">
+        <label><input type="radio" name="archMode" value="hide" checked />
+          <span>Скрыть на объекте
+            <small>Фрагмент копируется в СРВИ, на объекте защищается от перезаписи и скрывается. Возврат — мгновенный.</small>
+          </span>
+        </label>
+        <label><input type="radio" name="archMode" value="remove" />
+          <span>Изъять с объекта
+            <small>После копирования и сверки фрагмент удаляется на объекте. Возврат — обратной передачей по каналу.</small>
+          </span>
+        </label>
+      </div>
+      <label class="field">Основание (хранится только в СРВИ)
+        <textarea id="archReason" placeholder="Номер запроса, материала проверки или поручения"></textarea>
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="btn ghost" data-close="modalArchive">Отмена</button>
+        <button type="button" class="btn srvi" id="archConfirm">
+          <span class="material-symbols-outlined">move_down</span>Перехватить архив
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Новое задание архива -->
+  <div class="modal" id="modalJob" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalJobTitle">
+      <h3 id="modalJobTitle">Новое задание записи в СРВИ</h3>
+      <div class="radios">
+        <label><input type="radio" name="jobType" value="selective" checked />
+          <span>Выборочная запись
+            <small>Разовая запись выбранных камер за период (п. 1.21).</small>
+          </span>
+        </label>
+        <label><input type="radio" name="jobType" value="backup" />
+          <span>Резервирование
+            <small>Постоянное копирование архива объекта по расписанию (п. 1.20).</small>
+          </span>
+        </label>
+      </div>
+      <label class="field">Объект
+        <select id="jobSite"></select>
+      </label>
+      <div class="field">Камеры
+        <div class="cam-picks" id="jobCams"></div>
+      </div>
+      <div class="grid2" id="jobPeriod">
+        <label class="field">С
+          <input type="time" id="jobFrom" step="60" />
+        </label>
+        <label class="field">По
+          <input type="time" id="jobTo" step="60" />
+        </label>
+      </div>
+      <label class="field" id="jobScheduleField" hidden>Окно передачи
+        <select id="jobSchedule">
+          <option value="night">Ежедневно 01:00–06:00</option>
+          <option value="always">Круглосуточно</option>
+          <option value="weekend">Выходные дни</option>
+        </select>
+      </label>
+      <label class="field">Ограничение скорости
+        <select id="jobLimit">
+          <option value="1">1 Мбит/с</option>
+          <option value="2" selected>2 Мбит/с</option>
+          <option value="4">4 Мбит/с</option>
+          <option value="0">Без ограничения</option>
+        </select>
+      </label>
+      <p class="note info"><span class="material-symbols-outlined">info</span><span>Живое видео операторов СРВИ всегда передаётся в приоритете. Пока канал занят, задание ставится на паузу и продолжается с места остановки.</span></p>
+      <div class="modal-actions">
+        <button type="button" class="btn ghost" data-close="modalJob">Отмена</button>
+        <button type="button" class="btn primary" id="jobConfirm">Создать задание</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Что видит объект -->
+  <div class="modal" id="modalSiteView" hidden>
+    <div class="modal-card wide" role="dialog" aria-modal="true" aria-labelledby="modalSiteViewTitle">
+      <h3 id="modalSiteViewTitle">Что видит оператор объекта</h3>
+      <p class="muted" id="siteViewNote"></p>
+      <div class="site-view" id="siteViewBody"></div>
+      <div class="note neutral"><span class="material-symbols-outlined">visibility_off</span>
+        <span>На объекте нет записей о перехвате: ни в системном журнале, ни в конфигурации прав. Сохранённые раскладки пользователей не меняются — подмена действует только на экране, пока действует перехват.</span>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn primary" data-close="modalSiteView">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- О прототипе -->
+  <div class="modal" id="modalHelp" hidden>
+    <div class="modal-card wide" role="dialog" aria-modal="true" aria-labelledby="modalHelpTitle">
+      <h3 id="modalHelpTitle">О прототипе</h3>
+      <p class="muted">Примерный вариант нового веб-клиента СРВИ. Данные и видео — демонстрационные, сервер не нужен. Решение и архитектура описаны в Specifications/SafeCity_Specification.MD.</p>
+      <table class="table req-table">
+        <thead><tr><th>Пункт ТЗ</th><th>Где посмотреть в прототипе</th></tr></thead>
+        <tbody id="reqRows"></tbody>
+      </table>
+      <div class="modal-actions">
+        <button type="button" class="btn primary" data-close="modalHelp">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toasts" role="status" aria-live="polite"></div>
+
+  <script>
+  (() => {
+    "use strict";
+
+    /* ===================== Переводы =====================
+       Ключ — русская строка из разметки и кода, значение — перевод.
+       {…} подставляется при отрисовке. */
+    const DICT = {
+      en: {
+        "СРВИ «Безопасный город» — рабочее место оператора": "SRVI Safe City — operator workstation",
+        "СРВИ «Безопасный город»": "SRVI Safe City",
+        "ITV · Интеллект X": "ITV · Intellect X",
+        "Разделы": "Sections",
+        "Мониторинг": "Monitoring",
+        "Перехваты": "Interceptions",
+        "Архив в СРВИ": "Archive to SRVI",
+        "Журнал СРВИ": "SRVI audit log",
+        "Язык интерфейса": "Interface language",
+        "Тёмная тема": "Dark theme",
+        "Светлая тема": "Light theme",
+        "О прототипе и покрытии требований": "About the prototype and requirement coverage",
+        "Смирнов А. В.": "A. Smirnov",
+        "ГУ МВД · дежурная часть": "Police HQ · duty unit",
+        "Роль в СРВИ (демо)": "SRVI role (demo)",
+        "В продукте роль выдаёт администратор СРВИ. Переключатель нужен, чтобы показать, что видит каждая роль.": "In the product the SRVI administrator assigns roles. The switch shows what each role sees.",
+        "Сбросить демо-данные": "Reset demo data",
+        "Закрытый контур СРВИ": "Closed SRVI contour",
+        "Действия операторов СРВИ не видны администраторам и операторам объектов": "SRVI operator actions are invisible to site administrators and operators",
+        "Объекты мониторинга": "Monitored sites",
+        "Поиск камеры или объекта...": "Search camera or site...",
+        "Раскладка": "Layout",
+        "Сетка раскладки": "Layout grid",
+        "1 камера": "1 camera",
+        "4 камеры": "4 cameras",
+        "9 камер": "9 cameras",
+        "Режим видео": "Video mode",
+        "Живое видео": "Live",
+        "Архив": "Archive",
+        "Воспроизвести": "Play",
+        "Пауза": "Pause",
+        "Щёлкните, чтобы перейти к моменту архива": "Click to jump to an archive moment",
+        "Камера": "Camera",
+        "Управление": "Control",
+        "Перехват": "Intercept",
+        "События": "Events",
+        "Перехват архива": "Archive interception",
+        "С": "From",
+        "По": "To",
+        "Скрыть на объекте": "Hide on site",
+        "Фрагмент копируется в СРВИ, на объекте защищается от перезаписи и скрывается. Возврат — мгновенный.": "The fragment is copied to SRVI, protected from overwriting on site and hidden. Return is instant.",
+        "Изъять с объекта": "Remove from site",
+        "После копирования и сверки фрагмент удаляется на объекте. Возврат — обратной передачей по каналу.": "After copying and verification the fragment is deleted on site. Return means sending it back over the link.",
+        "Основание (хранится только в СРВИ)": "Basis (stored in SRVI only)",
+        "Номер запроса, материала проверки или поручения": "Request, case or order number",
+        "Отмена": "Cancel",
+        "Перехватить архив": "Intercept archive",
+        "Новое задание записи в СРВИ": "New SRVI recording job",
+        "Выборочная запись": "Selective recording",
+        "Разовая запись выбранных камер за период (п. 1.21).": "One-off recording of selected cameras for a period (req. 1.21).",
+        "Резервирование": "Backup",
+        "Постоянное копирование архива объекта по расписанию (п. 1.20).": "Continuous scheduled copying of the site archive (req. 1.20).",
+        "Объект": "Site",
+        "Камеры": "Cameras",
+        "Окно передачи": "Transfer window",
+        "Ежедневно 01:00–06:00": "Daily 01:00–06:00",
+        "Круглосуточно": "Around the clock",
+        "Выходные дни": "Weekends",
+        "Ограничение скорости": "Speed limit",
+        "1 Мбит/с": "1 Mbit/s",
+        "2 Мбит/с": "2 Mbit/s",
+        "4 Мбит/с": "4 Mbit/s",
+        "Без ограничения": "No limit",
+        "Живое видео операторов СРВИ всегда передаётся в приоритете. Пока канал занят, задание ставится на паузу и продолжается с места остановки.": "Live video of SRVI operators always has priority. While the link is busy the job pauses and resumes where it stopped.",
+        "Создать задание": "Create job",
+        "Что видит оператор объекта": "What the site operator sees",
+        "На объекте нет записей о перехвате: ни в системном журнале, ни в конфигурации прав. Сохранённые раскладки пользователей не меняются — подмена действует только на экране, пока действует перехват.": "The site keeps no record of the interception: neither in the system log nor in the permission settings. Saved user layouts do not change — the substitution exists only on screen while the interception lasts.",
+        "Закрыть": "Close",
+        "О прототипе": "About the prototype",
+        "Примерный вариант нового веб-клиента СРВИ. Данные и видео — демонстрационные, сервер не нужен. Решение и архитектура описаны в Specifications/SafeCity_Specification.MD.": "A draft of the new SRVI web client. Data and video are for demonstration; no server is needed. The solution and architecture are described in Specifications/SafeCity_Specification.MD.",
+        "Пункт ТЗ": "Requirement",
+        "Где посмотреть в прототипе": "Where to see it in the prototype",
+
+        /* роли */
+        "Оператор": "Operator",
+        "Старший оператор": "Senior operator",
+        "Администратор": "Administrator",
+        "Аудитор": "Auditor",
+        "видео, архив, PTZ, события": "video, archive, PTZ, events",
+        "+ перехват и архив в СРВИ": "+ interception and archive to SRVI",
+        "объекты и задания архива": "sites and archive jobs",
+        "только журнал СРВИ": "SRVI audit log only",
+        "Роль: {role}": "Role: {role}",
+
+        /* дерево и каналы */
+        "Городской сегмент": "City segment",
+        "Закрытый сегмент «Особый»": "Restricted segment “Special”",
+        "{n} из {total} на связи": "{n} of {total} online",
+        "Нет связи": "Offline",
+        "Узкий канал": "Narrow link",
+        "{streams} пот. · {used} / {quota} Мбит/с": "{streams} str. · {used} / {quota} Mbit/s",
+        "нет связи с объектом": "no link to the site",
+        "Ничего не найдено": "Nothing found",
+        "Поворотная камера": "PTZ camera",
+        "Распознавание ГРЗ": "Licence plate recognition",
+        "Стационарная камера": "Fixed camera",
+
+        /* плитки */
+        "LIVE": "LIVE",
+        "АРХИВ": "ARCHIVE",
+        "НИЗКИЙ ПОТОК": "LOW STREAM",
+        "ПЕРЕХВАТ": "INTERCEPTED",
+        "Пустая ячейка": "Empty cell",
+        "Выберите камеру в дереве — она встанет сюда": "Pick a camera in the tree to place it here",
+        "Нет связи с объектом": "No link to the site",
+        "Последний кадр недоступен. Архив объекта — после восстановления канала.": "Last frame unavailable. Site archive will be available once the link is back.",
+        "Фрагмент перехвачен": "Fragment intercepted",
+        "Воспроизводится копия из архива СРВИ": "Playing the copy from the SRVI archive",
+        "Раскладка · {site}": "Layout · {site}",
+        "Раскладка · {n} объекта": "Layout · {n} sites",
+        "Раскладка · {n} объектов": "Layout · {n} sites",
+
+        /* карточка */
+        "Выберите камеру": "Select a camera",
+        "Сведения": "Details",
+        "Тип": "Type",
+        "Поток": "Stream",
+        "высокий": "high",
+        "низкий": "low",
+        "Зрителей СРВИ": "SRVI viewers",
+        "Пользователей объекта смотрят": "Site users watching",
+        "Управление PTZ": "PTZ control",
+        "Камера без поворотного устройства": "The camera has no PTZ unit",
+        "Приоритет СРВИ — выше максимального приоритета объекта. Пользователи объекта не управляют камерой, пока вы держите сессию.": "SRVI priority is above the site's maximum. Site users cannot control the camera while you hold the session.",
+        "Сессия свободна": "Session is free",
+        "Управление у вас": "You are in control",
+        "Закреплено за СРВИ до {time}": "Locked for SRVI until {time}",
+        "Закрепить на 30 мин": "Lock for 30 min",
+        "Снять закрепление": "Release lock",
+        "Вверх": "Up",
+        "Вниз": "Down",
+        "Влево": "Left",
+        "Вправо": "Right",
+        "Приблизить": "Zoom in",
+        "Отдалить": "Zoom out",
+        "Домой": "Home",
+        "Пресеты": "Presets",
+        "Перекрёсток": "Crossroad",
+        "Остановка": "Bus stop",
+        "Общий план": "Wide view",
+        "Вход": "Entrance",
+        "Пресет «{name}»": "Preset “{name}”",
+        "Пользователи объекта видят «Управление недоступно» без имени управляющего.": "Site users see “Control unavailable” without the controller's name.",
+        "Перехватить камеру": "Intercept camera",
+        "Отключить пользователям объекта": "Cut off for site users",
+        "Живое видео (п. 1.12)": "Live video (req. 1.12)",
+        "Доступ к архиву (п. 1.13)": "Archive access (req. 1.13)",
+        "Управление PTZ (п. 1.16)": "PTZ control (req. 1.16)",
+        "Для кого": "For whom",
+        "Все пользователи объекта": "All site users",
+        "Ниже уровня «Высокий»": "Below the “High” level",
+        "Срок": "Duration",
+        "30 минут": "30 minutes",
+        "1 час": "1 hour",
+        "4 часа": "4 hours",
+        "До снятия вручную": "Until removed manually",
+        "Основание": "Basis",
+        "Номер запроса или поручения — хранится только в СРВИ": "Request or order number — stored in SRVI only",
+        "Перехватить": "Intercept",
+        "Сейчас на объекте эту камеру смотрят {n} польз. В их раскладках она будет заменена другой доступной камерой в режиме живого видео (п. 1.17).": "{n} site users are watching this camera now. In their layouts it will be replaced with another available camera in live mode (req. 1.17).",
+        "Показать, что увидит объект": "Show what the site will see",
+        "Перехват действует": "Interception active",
+        "Отключено": "Cut off",
+        "Действует до": "Valid until",
+        "до снятия": "until removed",
+        "Инициатор": "Initiator",
+        "Продлить на 1 час": "Extend by 1 hour",
+        "Снять перехват": "Release interception",
+        "Перехватить архив…": "Intercept archive…",
+        "Фрагмент архива переносится в СРВИ и становится недоступен на объекте (п. 1.14).": "The archive fragment moves to SRVI and becomes unavailable on site (req. 1.14).",
+        "Перехват доступен роли «Старший оператор».": "Interception is available to the “Senior operator” role.",
+        "Укажите основание перехвата.": "Enter the basis for the interception.",
+        "Отметьте хотя бы один вид доступа.": "Select at least one access type.",
+        "Объект не на связи: перехват выполнится, когда канал восстановится.": "The site is offline: the interception will run once the link is back.",
+        "События видеоаналитики": "Video analytics events",
+        "Только камеры раскладки": "Layout cameras only",
+        "Нет событий": "No events",
+        "Совпадение со списком контроля": "Watch-list match",
+        "Проезд": "Vehicle pass",
+        "Оставленный предмет": "Abandoned object",
+        "Скопление людей": "Crowd",
+        "Пересечение линии": "Line crossing",
+        "Щёлкните событие — камера откроется в архиве на этот момент": "Click an event to open the camera archive at that moment",
+
+        /* перехваты */
+        "Активные перехваты": "Active interceptions",
+        "Отключение живого видео, архива и PTZ для пользователей объектов. Основания и инициаторы хранятся только в СРВИ.": "Live video, archive and PTZ cut-offs for site users. Bases and initiators are stored in SRVI only.",
+        "Перехваты камер": "Camera interceptions",
+        "Перехваты архива": "Archive interceptions",
+        "Что отключено": "What is cut off",
+        "Для кого / до": "For whom / until",
+        "Основание и инициатор": "Basis and initiator",
+        "Подмен в раскладках": "Layout substitutions",
+        "Период": "Period",
+        "Режим": "Mode",
+        "Состояние": "Status",
+        "Нет активных перехватов": "No active interceptions",
+        "Нет перехватов архива": "No archive interceptions",
+        "живое видео": "live video",
+        "архив": "archive",
+        "PTZ": "PTZ",
+        "все пользователи": "all users",
+        "ниже «Высокий»": "below “High”",
+        "скрытие": "hiding",
+        "изъятие": "removal",
+        "Копирование в СРВИ": "Copying to SRVI",
+        "Сверка контрольных сумм": "Verifying checksums",
+        "Скрыт на объекте": "Hidden on site",
+        "Изъят с объекта": "Removed from site",
+        "Возврат на объект": "Returning to site",
+        "Возвращён": "Returned",
+        "Вернуть на объект": "Return to site",
+        "Открыть": "Open",
+        "Снять": "Release",
+        "Продлить": "Extend",
+
+        /* задания */
+        "Архив в СРВИ ": "Archive to SRVI ",
+        "Резервирование архива объектов и выборочная запись по камерам и периодам. Передача идёт через агента СРВИ на объекте, без объединения сетей.": "Backup of site archives and selective recording by camera and period. Transfer runs through the SRVI agent on site, without merging networks.",
+        "Новое задание": "New job",
+        "Задания": "Jobs",
+        "Задание": "Job",
+        "Объём": "Volume",
+        "Расписание / период": "Schedule / period",
+        "Скорость": "Speed",
+        "Ход": "Progress",
+        "Выполняется": "Running",
+        "Пауза: канал занят живым видео": "Paused: link busy with live video",
+        "Ожидает окна передачи": "Waiting for transfer window",
+        "Готово": "Done",
+        "Нет связи с объектом ": "No link to the site ",
+        "все камеры": "all cameras",
+        "{n} кам.": "{n} cam.",
+        "до {n} Мбит/с": "up to {n} Mbit/s",
+        "без ограничения": "no limit",
+        "Приостановить": "Pause",
+        "Продолжить": "Resume",
+        "Нет заданий": "No jobs",
+        "Выберите хотя бы одну камеру.": "Select at least one camera.",
+        "Задание создано": "Job created",
+        "Резервирование · {site}": "Backup · {site}",
+        "Выборочная запись · {site}": "Selective recording · {site}",
+        "сегодня {from}–{to}": "today {from}–{to}",
+        "Объём на сервере СРВИ": "Volume on the SRVI server",
+        "Использовано {used} ТБ из {total} ТБ": "{used} TB of {total} TB used",
+        "Нет доступа к разделу": "No access to this section",
+        "Раздел доступен ролям «Старший оператор» и «Администратор».": "The section is available to the “Senior operator” and “Administrator” roles.",
+        "Раздел доступен роли «Старший оператор».": "The section is available to the “Senior operator” role.",
+        "Журнал СРВИ доступен только роли «Аудитор» (п. 1.10).": "The SRVI audit log is available to the “Auditor” role only (req. 1.10).",
+        "Работа с камерами недоступна роли «Аудитор». Откройте журнал СРВИ.": "Camera work is not available to the “Auditor” role. Open the SRVI audit log.",
+        "Открыть журнал": "Open audit log",
+
+        /* журнал */
+        "Все действия в СРВИ. Записи только добавляются; каждая содержит хеш предыдущей, поэтому изменение или удаление записи обнаруживается.": "All actions in SRVI. Records are append-only; each contains the hash of the previous one, so any change or deletion is detected.",
+        "Цепочка целостна": "Chain intact",
+        "Записей: {n}": "Records: {n}",
+        "Поиск по пользователю, действию, камере...": "Search by user, action, camera...",
+        "Время": "Time",
+        "Пользователь": "User",
+        "Действие": "Action",
+        "Хеш": "Hash",
+        "Выгрузить": "Export",
+        "Выгрузка журнала подписывается ключом СРВИ (в прототипе не выполняется).": "The log export is signed with the SRVI key (not performed in the prototype).",
+        "Вход в СРВИ": "Signed in to SRVI",
+        "Просмотр живого видео": "Live video viewed",
+        "Просмотр архива": "Archive viewed",
+        "Перехват камеры": "Camera intercepted",
+        "Продление перехвата": "Interception extended",
+        "Снятие перехвата": "Interception released",
+        "Перехват архива ": "Archive intercepted",
+        "Возврат архива": "Archive returned",
+        "Закрепление PTZ": "PTZ locked",
+        "Снятие закрепления PTZ": "PTZ lock released",
+        "Задание архива": "Archive job",
+        "Смена роли (демо)": "Role switched (demo)",
+        "Сброс демо-данных": "Demo data reset",
+        "Петров И. В.": "I. Petrov",
+        "Кузнецова Е. А.": "E. Kuznetsova",
+        "Орлов Д. С.": "D. Orlov",
+        "Система": "System",
+        "Запрос УМВД № 4/1187": "Police request No. 4/1187",
+        "Поручение следователя № 112-ск": "Investigator order No. 112-sk",
+        "Материал проверки КУСП 3341": "Case file KUSP 3341",
+
+        /* строка состояния */
+        "Объекты на связи: {n} из {total}": "Sites online: {n} of {total}",
+        "Потоков с объектов: {n} — по одному на камеру для всех операторов СРВИ": "Streams from sites: {n} — one per camera for all SRVI operators",
+        "Активных перехватов: {n}": "Active interceptions: {n}",
+        "Журнал СРВИ: {n} записей": "SRVI log: {n} records",
+        "Агент СРВИ · канал TLS 1.3, mTLS": "SRVI agent · TLS 1.3 link, mTLS",
+
+        /* уведомления */
+        "Камера перехвачена: {cam}. Подмен в раскладках объекта: {n}.": "Camera intercepted: {cam}. Substitutions in site layouts: {n}.",
+        "Перехват продлён до {time}": "Interception extended until {time}",
+        "Перехват снят: {cam}. Доступ на объекте восстановлен.": "Interception released: {cam}. Site access restored.",
+        "Перехват архива запущен: {cam}, {from}–{to}": "Archive interception started: {cam}, {from}–{to}",
+        "Фрагмент {cam} {from}–{to} скрыт на объекте": "Fragment {cam} {from}–{to} hidden on site",
+        "Фрагмент {cam} {from}–{to} изъят с объекта": "Fragment {cam} {from}–{to} removed from site",
+        "Фрагмент возвращён на объект, доступ восстановлен": "Fragment returned to site, access restored",
+        "Совпадение со списком контроля: {plate}, {cam}": "Watch-list match: {plate}, {cam}",
+        "Управление закреплено до {time}": "Control locked until {time}",
+        "Закрепление снято": "Lock released",
+        "Камера уже в раскладке": "The camera is already in the layout",
+        "Демо-данные сброшены": "Demo data reset",
+        "Канал объекта перегружен: потоки переведены на низкое качество": "Site link overloaded: streams switched to low quality",
+
+        /* что видит объект */
+        "Камера «{cam}» перехвачена СРВИ. Слева — раскладка пользователя объекта до перехвата, справа — после.": "Camera “{cam}” is intercepted by SRVI. Left: the site user's layout before the interception; right: after.",
+        "До перехвата": "Before interception",
+        "После перехвата": "After interception",
+        "Камера заменена на «{cam}»": "Camera replaced with “{cam}”",
+
+        /* требования */
+        "Отдельный контур: свои пользователи, роли, журнал. Полоса «Закрытый контур СРВИ» и роли в меню пользователя.": "Separate contour: own users, roles and log. The “Closed SRVI contour” strip and roles in the user menu.",
+        "Живое видео, архив и события аналитики: Мониторинг → раскладка, режим «Архив», вкладка «События».": "Live video, archive and analytics events: Monitoring → layout, “Archive” mode, “Events” tab.",
+        "Журнал СРВИ: виден только роли «Аудитор». Переключите роль в меню пользователя.": "SRVI audit log: visible to the “Auditor” role only. Switch the role in the user menu.",
+        "Только браузер: весь интерфейс — веб-страница.": "Browser only: the whole interface is a web page.",
+        "Карточка камеры → «Перехват»: живое видео, архив, PTZ для пользователей объекта.": "Camera card → “Intercept”: live video, archive, PTZ for site users.",
+        "«Перехват архива…» в карточке камеры; возврат — раздел «Перехваты».": "“Intercept archive…” in the camera card; return — the “Interceptions” section.",
+        "Карточка камеры → «Управление»: приоритет СРВИ и закрепление сессии.": "Camera card → “Control”: SRVI priority and session lock.",
+        "«Показать, что увидит объект» на вкладке «Перехват».": "“Show what the site will see” on the “Intercept” tab.",
+        "Дерево объектов: независимые объекты, состояние канала каждого.": "Site tree: independent sites, the link state of each.",
+        "Полоса канала у объекта и строка состояния: один поток на камеру, только открытые камеры.": "Link bar per site and the status bar: one stream per camera, only open cameras.",
+        "Раздел «Архив в СРВИ»: резервирование и выборочная запись.": "“Archive to SRVI” section: backup and selective recording.",
+        "Сегменты в дереве: «Городской» и закрытый «Особый».": "Segments in the tree: “City” and the restricted “Special”.",
+        "Окно «Что видит оператор объекта»: на объекте нет записей и причин.": "“What the site operator sees” window: no records or reasons on site."
+      }
+    };
+
+    const LANGS = [
+      { id: "ru", locale: "ru-RU" },
+      { id: "en", locale: "en-GB" }
+    ];
+    let LANG = "ru";
+    const missing = new Set();
+
+    function t(key, vars) {
+      let s = key;
+      if (LANG !== "ru") {
+        const dict = DICT[LANG] || {};
+        if (Object.prototype.hasOwnProperty.call(dict, key)) s = dict[key];
+        else if (!missing.has(key)) {
+          missing.add(key);
+          console.warn("[i18n] нет перевода:", key);
+        }
+      }
+      if (vars) s = s.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
+      return s;
+    }
+    window.__i18nMissing = missing;
+    /* Данные, которые ввёл пользователь (основания, ФИО), переводятся, только если есть в словаре */
+    const td = (s) => (LANG !== "ru" && DICT[LANG] && Object.prototype.hasOwnProperty.call(DICT[LANG], s) ? DICT[LANG][s] : s);
+    const L = (o) => (o ? o[LANG] || o.ru : "");
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const $ = (id) => document.getElementById(id);
+    const locale = () => (LANGS.find((l) => l.id === LANG) || LANGS[0]).locale;
+    const fmtTime = (d, sec) => new Date(d).toLocaleTimeString(locale(), { hour: "2-digit", minute: "2-digit", second: sec ? "2-digit" : undefined, hour12: false });
+    const fmtNum = (n, digits = 1) => n.toLocaleString(locale(), { minimumFractionDigits: digits, maximumFractionDigits: digits });
+
+    /* ===================== Демо-данные ===================== */
+    const SEGMENTS = [
+      { id: "city", icon: "location_city", name: { ru: "Городской сегмент", en: "City segment" } },
+      { id: "special", icon: "lock", name: { ru: "Закрытый сегмент «Особый»", en: "Restricted segment “Special”" } }
+    ];
+    const SITES = [
+      { id: "s1", seg: "city", quota: 6, rtt: 42, link: "ok", name: { ru: "Северный муниципальный округ", en: "Northern municipal district" } },
+      { id: "s2", seg: "city", quota: 6, rtt: 55, link: "ok", name: { ru: "Южный муниципальный округ", en: "Southern municipal district" } },
+      { id: "s3", seg: "city", quota: 8, rtt: 31, link: "ok", name: { ru: "Транспортный узел «Вокзальная»", en: "Vokzalnaya transport hub" } },
+      { id: "s4", seg: "special", quota: 1.5, rtt: 180, link: "narrow", name: { ru: "Посёлок Озёрный", en: "Ozerny settlement" } },
+      { id: "s5", seg: "special", quota: 10, rtt: 0, link: "offline", name: { ru: "Стадион «Арена»", en: "Arena stadium" } }
+    ];
+    const CAMERAS = [
+      { id: "c11", site: "s1", type: "ptz", scene: "cross", viewers: 3, name: { ru: "Ул. Ленина — пл. Победы", en: "Lenina St — Pobedy Sq" } },
+      { id: "c12", site: "s1", type: "fixed", scene: "yard", viewers: 1, name: { ru: "Ул. Ленина, 24 — подъезд 1", en: "24 Lenina St — entrance 1" } },
+      { id: "c13", site: "s1", type: "lpr", scene: "road", viewers: 2, name: { ru: "Въезд с пр. Мира", en: "Mira Ave entry" } },
+      { id: "c14", site: "s1", type: "fixed", scene: "square", viewers: 0, name: { ru: "Сквер у ДК", en: "Culture centre park" } },
+      { id: "c21", site: "s2", type: "ptz", scene: "cross", viewers: 2, name: { ru: "Пр. Строителей — ТЦ «Южный»", en: "Stroiteley Ave — Yuzhny mall" } },
+      { id: "c22", site: "s2", type: "lpr", scene: "parking", viewers: 1, name: { ru: "Парковка ТЦ «Южный»", en: "Yuzhny mall parking" } },
+      { id: "c23", site: "s2", type: "fixed", scene: "yard", viewers: 0, name: { ru: "Школа № 7 — вход", en: "School No. 7 — entrance" } },
+      { id: "c31", site: "s3", type: "fixed", scene: "platform", viewers: 4, name: { ru: "Платформа 1", en: "Platform 1" } },
+      { id: "c32", site: "s3", type: "ptz", scene: "hall", viewers: 2, name: { ru: "Зал ожидания", en: "Waiting hall" } },
+      { id: "c33", site: "s3", type: "ptz", scene: "square", viewers: 3, name: { ru: "Привокзальная площадь", en: "Station square" } },
+      { id: "c34", site: "s3", type: "lpr", scene: "parking", viewers: 1, name: { ru: "Въезд на парковку", en: "Parking entry" } },
+      { id: "c41", site: "s4", type: "fixed", scene: "road", viewers: 1, name: { ru: "Ул. Центральная — магазин", en: "Tsentralnaya St — shop" } },
+      { id: "c42", site: "s4", type: "lpr", scene: "road", viewers: 0, name: { ru: "Въезд в посёлок", en: "Settlement entry" } },
+      { id: "c51", site: "s5", type: "fixed", scene: "hall", viewers: 0, name: { ru: "Сектор A — вход", en: "Sector A — entrance" } },
+      { id: "c52", site: "s5", type: "ptz", scene: "road", viewers: 0, name: { ru: "Периметр, север", en: "North perimeter" } }
+    ];
+    const PRESETS = ["Перекрёсток", "Остановка", "Общий план", "Вход"];
+    const PLATES = ["А123ВС 77", "М456ОР 199", "Е777КХ 750", "О001АА 50", "Т318НУ 77", "К905МР 197", "В240СЕ 799", "Р612ТО 50"];
+    const WATCH = new Set(["Е777КХ 750", "Т318НУ 77"]);
+    const PEOPLE = ["Петров И. В.", "Кузнецова Е. А.", "Орлов Д. С."];
+    const REASONS = ["Запрос УМВД № 4/1187", "Поручение следователя № 112-ск", "Материал проверки КУСП 3341"];
+    const ROLES = [
+      { id: "operator", name: "Оператор", hint: "видео, архив, PTZ, события" },
+      { id: "senior", name: "Старший оператор", hint: "+ перехват и архив в СРВИ" },
+      { id: "admin", name: "Администратор", hint: "объекты и задания архива" },
+      { id: "auditor", name: "Аудитор", hint: "только журнал СРВИ" }
+    ];
+    const CAN = {
+      monitor: ["operator", "senior", "admin"],
+      intercept: ["senior"],
+      jobs: ["senior", "admin"],
+      audit: ["auditor"]
+    };
+    const can = (what) => CAN[what].includes(state.role);
+    const cam = (id) => CAMERAS.find((c) => c.id === id);
+    const site = (id) => SITES.find((s) => s.id === id);
+    const MIN = 60 * 1000;
+    const dayStart = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d.getTime(); };
+    const atTime = (hhmm) => { const [h, m] = hhmm.split(":").map(Number); return dayStart() + (h * 60 + m) * MIN; };
+    const toHHMM = (ms) => { const d = new Date(ms); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
+
+    function seedState() {
+      const now = Date.now();
+      return {
+        role: "senior",
+        view: "monitor",
+        tab: "control",
+        layout: 4,
+        mode: "live",
+        tiles: ["c11", "c13", "c33", "c41", null, null, null, null, null],
+        selected: "c11",
+        openSites: { s1: true, s3: true, s4: true },
+        archiveTime: now - 35 * MIN,
+        playing: false,
+        ptzView: {},
+        ptzLock: null,
+        layoutOnly: false,
+        restrictions: [
+          { id: "r1", cam: "c32", live: true, archive: false, ptz: true, who: "all", until: now + 47 * MIN, reason: REASONS[0], by: PEOPLE[0], subs: 2, at: now - 13 * MIN }
+        ],
+        archives: [
+          { id: "a1", cam: "c34", from: atTime("08:12"), to: atTime("08:40"), mode: "hide", status: "hidden", progress: 100, reason: REASONS[1], by: PEOPLE[1] }
+        ],
+        jobs: [
+          { id: "j1", type: "backup", site: "s3", cams: "all", schedule: "night", limit: 4, status: "done", progress: 100, gb: 186 },
+          { id: "j2", type: "selective", site: "s1", cams: ["c13"], from: atTime("06:00"), to: atTime("09:00"), limit: 2, status: "running", progress: 37, gb: 7.4 },
+          { id: "j3", type: "backup", site: "s4", cams: "all", schedule: "always", limit: 1, status: "paused-link", progress: 62, gb: 41 }
+        ],
+        events: seedEvents(now),
+        audit: []
+      };
+    }
+
+    function seedEvents(now) {
+      const list = [];
+      const lpr = CAMERAS.filter((c) => c.type === "lpr" && site(c.site).link !== "offline");
+      for (let i = 0; i < 9; i += 1) {
+        const c = lpr[i % lpr.length];
+        const plate = PLATES[(i * 3) % PLATES.length];
+        list.push({ id: "e" + i, cam: c.id, kind: WATCH.has(plate) ? "hit" : "pass", plate, at: now - (i * 7 + 2) * MIN });
+      }
+      list.push({ id: "e-x1", cam: "c31", kind: "object", at: now - 19 * MIN });
+      list.push({ id: "e-x2", cam: "c33", kind: "crowd", at: now - 26 * MIN });
+      list.push({ id: "e-x3", cam: "c11", kind: "line", at: now - 4 * MIN });
+      return list.sort((a, b) => b.at - a.at);
+    }
+
+    let state = seedState();
+
+    /* ===================== Журнал с цепочкой хешей ===================== */
+    function fnv(str) {
+      let h = 0x811c9dc5;
+      for (let i = 0; i < str.length; i += 1) {
+        h ^= str.charCodeAt(i);
+        h = Math.imul(h, 0x01000193);
+      }
+      return (h >>> 0).toString(16).padStart(8, "0");
+    }
+    function log(action, object, user, at) {
+      const prev = state.audit.length ? state.audit[state.audit.length - 1].hash : "00000000";
+      const entry = { at: at || Date.now(), user: user || "Смирнов А. В.", role: state.role, action, object: object || "", prev };
+      entry.hash = fnv(prev + entry.at + entry.user + action + JSON.stringify(object));
+      state.audit.push(entry);
+    }
+    function seedAudit() {
+      const now = Date.now();
+      log("Вход в СРВИ", "", PEOPLE[0], now - 95 * MIN);
+      log("Перехват архива ", { cam: "c34", from: atTime("08:12"), to: atTime("08:40") }, PEOPLE[1], now - 62 * MIN);
+      log("Задание архива", { job: "j2" }, PEOPLE[2], now - 41 * MIN);
+      log("Перехват камеры", { cam: "c32" }, PEOPLE[0], now - 13 * MIN);
+      log("Вход в СРВИ", "", undefined, now - 6 * MIN);
+      log("Просмотр живого видео", { cam: "c11" }, undefined, now - 5 * MIN);
+    }
+    seedAudit();
+
+    function auditObject(o) {
+      if (!o) return "";
+      if (o.cam && o.from) return L(cam(o.cam).name) + " · " + toHHMM(o.from) + "–" + toHHMM(o.to);
+      if (o.cam) return L(cam(o.cam).name);
+      if (o.job) return jobTitle(state.jobs.find((j) => j.id === o.job) || { type: "selective", site: "s1" });
+      if (o.role) return t(ROLES.find((r) => r.id === o.role).name);
+      return "";
+    }
+
+    /* ===================== Сцены видео ===================== */
+    function sceneSvg(kind, seed) {
+      const sky = ["#1c2a3a", "#23303f", "#1a2533"][seed % 3];
+      const lamp = seed % 2 ? "#f5d48a" : "#cfe3ff";
+      const blds = Array.from({ length: 6 }, (_, i) => {
+        const w = 40 + ((seed * 13 + i * 29) % 40);
+        const h = 50 + ((seed * 17 + i * 23) % 70);
+        const x = i * 66 - 10;
+        const wins = Array.from({ length: 6 }, (_, k) => (k * 7 + seed + i) % 3 === 0
+          ? `<rect x="${x + 6 + (k % 3) * 12}" y="${150 - h + 8 + Math.floor(k / 3) * 16}" width="6" height="8" fill="${lamp}" opacity=".55"/>` : "").join("");
+        return `<rect x="${x}" y="${150 - h}" width="${w}" height="${h}" fill="#2a3442"/>${wins}`;
+      }).join("");
+      const car = (cls, y, color) => `<g class="${cls}"><rect x="0" y="${y}" width="44" height="16" rx="4" fill="${color}"/><rect x="8" y="${y - 8}" width="26" height="10" rx="3" fill="${color}" opacity=".85"/><circle cx="10" cy="${y + 16}" r="4" fill="#0b0c0e"/><circle cx="34" cy="${y + 16}" r="4" fill="#0b0c0e"/></g>`;
+      const person = (cls, x, y) => `<g class="${cls}"><circle cx="${x}" cy="${y}" r="4" fill="#9aa4b2"/><rect x="${x - 4}" y="${y + 5}" width="8" height="16" rx="3" fill="#7d8796"/></g>`;
+      let ground = "";
+      switch (kind) {
+        case "cross":
+          ground = `<polygon points="0,225 400,225 400,150 0,150" fill="#30343b"/><polygon points="150,150 250,150 330,225 70,225" fill="#3a3f47"/>${[0, 1, 2, 3, 4].map((i) => `<rect x="${110 + i * 40}" y="196" width="22" height="6" fill="#d7dbe0" opacity=".55"/>`).join("")}${car("mv-a", 168, "#8a1f1f")}${car("mv-b", 184, "#c9ccd2")}${person("mv-c", 60, 182)}`;
+          break;
+        case "road":
+          ground = `<polygon points="0,225 400,225 400,150 0,150" fill="#2b2f35"/><polygon points="160,150 240,150 400,225 0,225" fill="#383c43"/>${[0, 1, 2, 3].map((i) => `<rect x="${196}" y="${158 + i * 17}" width="8" height="10" fill="#e3c26b" opacity=".6"/>`).join("")}${car("mv-a", 176, "#2f5d8a")}${car("mv-b", 196, "#5b5f66")}`;
+          break;
+        case "parking":
+          ground = `<rect x="0" y="150" width="400" height="75" fill="#33373e"/>${[0, 1, 2, 3, 4, 5, 6].map((i) => `<rect x="${20 + i * 55}" y="158" width="3" height="30" fill="#cfd3d8" opacity=".5"/>`).join("")}${[0, 2, 4].map((i) => `<rect x="${28 + i * 55}" y="166" width="40" height="18" rx="4" fill="${["#4b5563", "#7c2d12", "#1e3a8a"][i / 2]}"/>`).join("")}${car("mv-a", 200, "#d1d5db")}<rect x="300" y="120" width="6" height="80" fill="#4a4f57"/><rect x="292" y="112" width="40" height="10" fill="#e7b416" opacity=".8"/>`;
+          break;
+        case "yard":
+          ground = `<rect x="0" y="150" width="400" height="75" fill="#2c3330"/><rect x="140" y="95" width="120" height="55" fill="#384150"/><rect x="180" y="110" width="40" height="40" fill="#151a21"/><rect x="184" y="114" width="32" height="6" fill="${lamp}" opacity=".6"/>${person("mv-c", 120, 178)}<rect x="40" y="185" width="70" height="8" rx="3" fill="#5b4636"/>`;
+          break;
+        case "square":
+          ground = `<rect x="0" y="150" width="400" height="75" fill="#373a40"/><ellipse cx="200" cy="190" rx="70" ry="18" fill="#2f3237" stroke="#4b4f56"/><rect x="196" y="140" width="8" height="50" fill="#5b616a"/>${person("mv-c", 90, 176)}${person("mv-c", 300, 186)}${person("", 240, 196)}`;
+          break;
+        case "platform":
+          ground = `<rect x="0" y="150" width="400" height="75" fill="#2d3036"/><rect x="0" y="170" width="400" height="10" fill="#e0b64a" opacity=".55"/><rect x="0" y="182" width="400" height="43" fill="#1d2025"/>${[0, 1, 2, 3, 4, 5, 6, 7].map((i) => `<rect x="${i * 52}" y="200" width="30" height="4" fill="#5b616a"/>`).join("")}${person("mv-c", 120, 140)}${person("", 260, 142)}${person("mv-c", 330, 138)}`;
+          break;
+        default:
+          ground = `<rect x="0" y="0" width="400" height="225" fill="#2a2d33"/><rect x="0" y="150" width="400" height="75" fill="#3b3f46"/>${[0, 1, 2, 3, 4].map((i) => `<rect x="${30 + i * 75}" y="40" width="40" height="8" fill="${lamp}" opacity=".7"/>`).join("")}${[0, 1, 2].map((i) => `<rect x="${60 + i * 110}" y="160" width="80" height="12" rx="3" fill="#545a63"/>`).join("")}${person("mv-c", 100, 136)}${person("", 230, 140)}${person("mv-c", 320, 132)}`;
+      }
+      const skyPart = kind === "hall" ? "" : `<rect width="400" height="150" fill="${sky}"/>${blds}`;
+      return `<svg class="scene" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${skyPart}${ground}</svg>`;
+    }
+    const seedOf = (id) => id.split("").reduce((a, ch) => a + ch.charCodeAt(0), 0);
+
+    /* ===================== Каналы и потоки ===================== */
+    function streamsBySite() {
+      const res = {};
+      const ids = [...new Set(state.tiles.slice(0, state.layout).filter(Boolean))];
+      ids.forEach((id) => {
+        const c = cam(id);
+        const s = site(c.site);
+        if (s.link === "offline") return;
+        (res[s.id] = res[s.id] || []).push(id);
+      });
+      const out = {};
+      SITES.forEach((s) => {
+        const list = res[s.id] || [];
+        let rate = state.layout === 1 ? 2.5 : 0.6;
+        let low = state.layout !== 1;
+        if (s.link === "narrow") { rate = 0.5; low = true; }
+        let used = list.length * rate;
+        let overloaded = false;
+        if (used > s.quota && !low) { rate = 0.6; low = true; used = list.length * rate; }
+        if (used > s.quota) overloaded = true;
+        out[s.id] = { cams: list, used, low, overloaded };
+      });
+      return out;
+    }
+
+    const restrictionOf = (camId) => state.restrictions.find((r) => r.cam === camId);
+    const hiddenIntervals = (camId) => state.archives.filter((a) => a.cam === camId && ["hidden", "removed", "copy", "verify"].includes(a.status));
+
+    /* ===================== Статичные тексты разметки ===================== */
+    const STATIC = { text: [], attr: [] };
+    const I18N_ATTRS = ["title", "placeholder", "aria-label"];
+    const CYR = /[\u0400-\u04FF]/;
+    function collectStatic() {
+      document.querySelectorAll("*").forEach((el) => {
+        if (el.closest("[data-i18n-skip]")) return;
+        I18N_ATTRS.forEach((a) => {
+          const v = el.getAttribute(a);
+          if (v && CYR.test(v)) STATIC.attr.push({ el, a, ru: v.trim() });
+        });
+      });
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          if (!CYR.test(node.nodeValue)) return NodeFilter.FILTER_REJECT;
+          if (node.parentElement.closest("[data-i18n-skip], script, [data-dynamic]")) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+        const raw = n.nodeValue;
+        STATIC.text.push({ n, ru: raw.trim(), pre: raw.match(/^\s*/)[0], post: raw.match(/\s*$/)[0] });
+      }
+      STATIC.title = document.title;
+    }
+    function applyStatic() {
+      STATIC.attr.forEach((i) => i.el.setAttribute(i.a, t(i.ru)));
+      STATIC.text.forEach((i) => (i.n.nodeValue = i.pre + t(i.ru) + i.post));
+      document.title = t(STATIC.title);
+    }
+
+    /* ===================== Тема и язык ===================== */
+    function applyTheme(mode) {
+      const theme = mode === "light" ? "light" : "dark";
+      state.theme = theme;
+      document.documentElement.dataset.theme = theme;
+      try { localStorage.setItem("srvi-theme", theme); } catch (e) { /* приватный режим */ }
+      const label = t(theme === "light" ? "Светлая тема" : "Тёмная тема");
+      $("themeToggle").title = label;
+      $("themeToggle").setAttribute("aria-label", label);
+    }
+    function applyLang(id) {
+      LANG = LANGS.some((l) => l.id === id) ? id : "ru";
+      document.documentElement.lang = LANG;
+      try { localStorage.setItem("srvi-lang", LANG); } catch (e) { /* приватный режим */ }
+      if ($("langSelect").value !== LANG) $("langSelect").value = LANG;
+      applyStatic();
+      applyTheme(state.theme);
+      renderAll();
+    }
+
+    /* ===================== Отрисовка ===================== */
+    function renderAll() {
+      renderNav();
+      renderRole();
+      renderTree();
+      renderStage();
+      renderSide();
+      renderIntercepts();
+      renderJobs();
+      renderAudit();
+      renderStatus();
+    }
+
+    function allowedView(v) {
+      if (v === "monitor") return can("monitor");
+      if (v === "intercepts") return can("intercept");
+      if (v === "jobs") return can("jobs");
+      if (v === "audit") return can("audit");
+      return false;
+    }
+
+    function renderNav() {
+      if (!allowedView(state.view)) state.view = ["monitor", "audit", "jobs"].find(allowedView);
+      document.querySelectorAll("#nav .nav-btn").forEach((b) => {
+        b.hidden = !allowedView(b.dataset.view);
+        b.classList.toggle("active", b.dataset.view === state.view);
+        if (b.dataset.view === state.view) b.setAttribute("aria-current", "page");
+        else b.removeAttribute("aria-current");
+      });
+      const n = state.restrictions.length + state.archives.filter((a) => a.status !== "returned").length;
+      $("navInterceptCount").textContent = n;
+      $("navInterceptCount").hidden = n === 0;
+      $("workspace").dataset.view = state.view;
+    }
+
+    function renderRole() {
+      const r = ROLES.find((x) => x.id === state.role);
+      $("rolePill").textContent = t(r.name);
+      $("roleItems").innerHTML = ROLES.map((x) => `
+        <button type="button" class="menu-item ${x.id === state.role ? "checked" : ""}" data-role="${x.id}" role="menuitemradio" aria-checked="${x.id === state.role}">
+          <span class="material-symbols-outlined">${x.id === state.role ? "radio_button_checked" : "radio_button_unchecked"}</span>
+          <span>${esc(t(x.name))}</span><small>${esc(t(x.hint))}</small>
+        </button>`).join("");
+    }
+
+    function camIcon(c) {
+      return c.type === "ptz" ? "videocam" : c.type === "lpr" ? "directions_car" : "linked_camera";
+    }
+    function camTypeLabel(c) {
+      return t(c.type === "ptz" ? "Поворотная камера" : c.type === "lpr" ? "Распознавание ГРЗ" : "Стационарная камера");
+    }
+
+    function renderTree() {
+      const q = ($("treeSearch").value || "").trim().toLowerCase();
+      const streams = streamsBySite();
+      const online = SITES.filter((s) => s.link !== "offline").length;
+      $("sitesCount").textContent = t("{n} из {total} на связи", { n: online, total: SITES.length });
+      const visibleCam = (c) => !q || L(c.name).toLowerCase().includes(q) || L(site(c.site).name).toLowerCase().includes(q);
+      const inLayout = new Set(state.tiles.slice(0, state.layout).filter(Boolean));
+      let html = "";
+      let any = false;
+      SEGMENTS.forEach((sg) => {
+        const sites = SITES.filter((s) => s.seg === sg.id && CAMERAS.some((c) => c.site === s.id && visibleCam(c)));
+        if (!sites.length) return;
+        any = true;
+        html += `<li class="seg-title"><span class="material-symbols-outlined">${sg.icon}</span>${esc(L(sg.name))}</li>`;
+        sites.forEach((s) => {
+          const st = streams[s.id];
+          const open = q ? true : !!state.openSites[s.id];
+          const pct = Math.min(100, (st.used / s.quota) * 100);
+          const barCls = st.overloaded ? "crit" : pct > 70 ? "warn" : "";
+          const dotCls = s.link === "offline" ? "off" : s.link === "narrow" ? "warn" : "";
+          const linkBadge = s.link === "offline" ? `<span class="badge neutral">${t("Нет связи")}</span>` : s.link === "narrow" ? `<span class="badge warn">${t("Узкий канал")}</span>` : "";
+          const meta = s.link === "offline"
+            ? `<span>${t("нет связи с объектом")}</span>`
+            : `<div class="bar ${barCls}"><i style="width:${pct}%"></i></div><span>${t("{streams} пот. · {used} / {quota} Мбит/с", { streams: st.cams.length, used: fmtNum(st.used), quota: fmtNum(s.quota) })}</span>`;
+          html += `<li class="site ${open ? "open" : ""}">
+            <button type="button" class="site-row" data-site="${s.id}">
+              <span class="material-symbols-outlined chev">chevron_right</span>
+              <span class="dot ${dotCls}"></span>
+              <span class="site-name" title="${esc(L(s.name))}">${esc(L(s.name))}</span>${linkBadge}
+            </button>
+            <div class="site-meta">${meta}</div>
+            <ul class="cams">${CAMERAS.filter((c) => c.site === s.id && visibleCam(c)).map((c) => {
+              const r = restrictionOf(c.id);
+              return `<li><button type="button" class="cam-row ${c.id === state.selected ? "selected" : ""} ${inLayout.has(c.id) ? "in-layout" : ""}" data-cam="${c.id}" title="${esc(camTypeLabel(c))}">
+                <span class="material-symbols-outlined">${camIcon(c)}</span>
+                <span class="cam-name">${esc(L(c.name))}</span>
+                ${r ? `<span class="badge srvi"><span class="material-symbols-outlined">shield_lock</span></span>` : ""}
+              </button></li>`;
+            }).join("")}</ul>
+          </li>`;
+        });
+      });
+      $("tree").innerHTML = any ? html : `<li class="seg-title">${t("Ничего не найдено")}</li>`;
+    }
+
+    function tileHtml(id, idx, opts = {}) {
+      if (!id) {
+        return `<button type="button" class="tile empty" data-idx="${idx}"><div class="tile-empty"><div><span class="material-symbols-outlined">add_to_queue</span>${t("Пустая ячейка")}<br><span>${t("Выберите камеру в дереве — она встанет сюда")}</span></div></div></button>`;
+      }
+      const c = cam(id);
+      const s = site(c.site);
+      const streams = opts.streams || {};
+      const st = streams[s.id];
+      const r = restrictionOf(id);
+      const pv = state.ptzView[id] || { pan: 0, tilt: 0, zoom: 1 };
+      const archive = opts.mode ? opts.mode === "archive" : state.mode === "archive";
+      const ts = archive ? state.archiveTime : Date.now();
+      let body;
+      if (s.link === "offline") {
+        body = `<div class="tile-empty"><div><span class="material-symbols-outlined">signal_disconnected</span>${t("Нет связи с объектом")}<br><span>${t("Последний кадр недоступен. Архив объекта — после восстановления канала.")}</span></div></div>`;
+      } else {
+        body = `<div style="position:absolute;inset:0;transform:translate(${pv.pan}px,${pv.tilt}px) scale(${pv.zoom});transition:transform .4s ease" class="${archive && !state.playing ? "paused" : ""}">${sceneSvg(c.scene, seedOf(id))}</div><div class="scan"></div>`;
+      }
+      const inHidden = archive && hiddenIntervals(id).some((a) => ts >= a.from && ts <= a.to);
+      const tags = [];
+      if (s.link !== "offline") tags.push(archive ? `<span class="tag arch">${t("АРХИВ")}</span>` : `<span class="tag live">${t("LIVE")}</span>`);
+      if (r && !opts.plain) tags.push(`<span class="tag srvi"><span class="material-symbols-outlined">shield_lock</span>${t("ПЕРЕХВАТ")}</span>`);
+      const lowTag = st && st.low && s.link !== "offline" && !opts.plain ? `<span class="tag low">${t("НИЗКИЙ ПОТОК")}</span>` : "";
+      const hiddenNote = inHidden ? `<div class="tile-empty" style="background:rgba(60,20,90,.55)"><div><span class="material-symbols-outlined">shield_lock</span>${t("Фрагмент перехвачен")}<br><span>${t("Воспроизводится копия из архива СРВИ")}</span></div></div>` : "";
+      return `<button type="button" class="tile ${id === state.selected && !opts.plain ? "selected" : ""} ${opts.cls || ""}" data-idx="${idx}" data-cam="${id}">
+        ${body}${hiddenNote}
+        <div class="hud top"><span class="name">${esc(L(c.name))}</span>${tags.join("")}</div>
+        <div class="hud bottom"><span>${esc(L(s.name))}</span><span class="spacer"></span>${lowTag}<span>${s.link === "offline" ? "" : fmtTime(ts, true)}</span></div>
+      </button>`;
+    }
+
+    function renderStage() {
+      const streams = streamsBySite();
+      $("grid").dataset.layout = state.layout;
+      $("grid").innerHTML = state.tiles.slice(0, state.layout).map((id, i) => tileHtml(id, i, { streams })).join("");
+      document.querySelectorAll("#layoutSeg button").forEach((b) => b.classList.toggle("active", Number(b.dataset.layout) === state.layout));
+      document.querySelectorAll("#modeSeg button").forEach((b) => b.classList.toggle("active", b.dataset.mode === state.mode));
+      $("stageBody").dataset.mode = state.mode;
+      const sitesInLayout = [...new Set(state.tiles.slice(0, state.layout).filter(Boolean).map((id) => cam(id).site))];
+      $("layoutTitle").textContent = sitesInLayout.length === 1
+        ? t("Раскладка · {site}", { site: L(site(sitesInLayout[0]).name) })
+        : sitesInLayout.length > 1
+          ? t(sitesInLayout.length < 5 ? "Раскладка · {n} объекта" : "Раскладка · {n} объектов", { n: sitesInLayout.length })
+          : t("Раскладка");
+      renderTimeline();
+    }
+
+    function renderTimeline() {
+      if (state.mode !== "archive") return;
+      const start = dayStart();
+      const span = 24 * 60 * MIN;
+      const now = Date.now();
+      const pos = (ms) => ((ms - start) / span) * 100;
+      const sel = state.selected;
+      let segs = `<div class="tl-rec" style="left:0;width:${pos(now)}%"></div>`;
+      if (sel) {
+        hiddenIntervals(sel).forEach((a) => {
+          segs += `<div class="tl-hidden" style="left:${pos(a.from)}%;width:${Math.max(0.6, pos(a.to) - pos(a.from))}%" title="${esc(t("Фрагмент перехвачен"))} ${toHHMM(a.from)}–${toHHMM(a.to)}"></div>`;
+        });
+      }
+      $("tlSegments").innerHTML = segs;
+      $("tlCursor").style.left = pos(state.archiveTime) + "%";
+      $("tlTicks").innerHTML = [0, 3, 6, 9, 12, 15, 18, 21, 24].map((h) => `<span>${String(h).padStart(2, "0")}</span>`).join("");
+      $("tlTime").textContent = fmtTime(state.archiveTime, true);
+      const playLabel = t(state.playing ? "Пауза" : "Воспроизвести");
+      $("tlPlay").innerHTML = `<span class="material-symbols-outlined">${state.playing ? "pause" : "play_arrow"}</span>`;
+      $("tlPlay").title = playLabel;
+      $("tlPlay").setAttribute("aria-label", playLabel);
+    }
+
+    function renderSide() {
+      document.querySelectorAll("#sideSeg button").forEach((b) => b.classList.toggle("active", b.dataset.tab === state.tab));
+      const c = cam(state.selected);
+      if (!c) {
+        $("sideTitle").textContent = t("Выберите камеру");
+        $("sideBadges").innerHTML = "";
+        $("sideBody").innerHTML = "";
+        return;
+      }
+      const s = site(c.site);
+      const r = restrictionOf(c.id);
+      $("sideTitle").textContent = L(c.name);
+      $("sideTitle").title = L(c.name);
+      $("sideBadges").innerHTML = r ? `<span class="badge srvi"><span class="material-symbols-outlined">shield_lock</span>${t("ПЕРЕХВАТ")}</span>` : "";
+      if (state.tab === "control") $("sideBody").innerHTML = sideControl(c, s);
+      else if (state.tab === "intercept") $("sideBody").innerHTML = sideIntercept(c, s, r);
+      else $("sideBody").innerHTML = sideEvents();
+    }
+
+    function sideControl(c, s) {
+      const st = streamsBySite()[s.id];
+      const inLayout = st.cams.includes(c.id);
+      const info = `<div class="section"><h3><span class="material-symbols-outlined">info</span>${t("Сведения")}</h3>
+        <dl class="kv">
+          <dt>${t("Объект")}</dt><dd>${esc(L(s.name))}</dd>
+          <dt>${t("Тип")}</dt><dd>${esc(camTypeLabel(c))}</dd>
+          <dt>${t("Поток")}</dt><dd>${s.link === "offline" ? "—" : inLayout ? t(st.low ? "низкий" : "высокий") : "—"}</dd>
+          <dt>${t("Зрителей СРВИ")}</dt><dd>${inLayout ? 1 + (seedOf(c.id) % 3) : 0}</dd>
+          <dt>${t("Пользователей объекта смотрят")}</dt><dd>${restrictionOf(c.id) && restrictionOf(c.id).live ? 0 : c.viewers}</dd>
+        </dl></div>`;
+      if (c.type !== "ptz") {
+        return info + `<div class="section"><h3><span class="material-symbols-outlined">control_camera</span>${t("Управление PTZ")}</h3><p class="note neutral"><span class="material-symbols-outlined">block</span><span>${t("Камера без поворотного устройства")}</span></p></div>`;
+      }
+      const offline = s.link === "offline";
+      const locked = state.ptzLock && state.ptzLock.cam === c.id && state.ptzLock.until > Date.now();
+      const status = locked
+        ? `<span class="badge srvi"><span class="material-symbols-outlined">lock</span>${t("Закреплено за СРВИ до {time}", { time: fmtTime(state.ptzLock.until) })}</span>`
+        : `<span class="badge info">${t(state.ptzActive === c.id ? "Управление у вас" : "Сессия свободна")}</span>`;
+      const dis = offline ? "disabled" : "";
+      const btn = (dir, icon, label) => `<button type="button" class="icon-btn" data-ptz="${dir}" title="${esc(t(label))}" aria-label="${esc(t(label))}" ${dis}><span class="material-symbols-outlined">${icon}</span></button>`;
+      return info + `<div class="section stack"><h3><span class="material-symbols-outlined">control_camera</span>${t("Управление PTZ")}</h3>
+        <div class="row between wrap">${status}
+          <button type="button" class="btn outline small" id="ptzLockBtn" ${dis}>
+            <span class="material-symbols-outlined">${locked ? "lock_open" : "lock"}</span>${t(locked ? "Снять закрепление" : "Закрепить на 30 мин")}
+          </button>
+        </div>
+        <div class="row" style="gap:16px;align-items:flex-start">
+          <div class="ptz-pad">
+            <span></span>${btn("up", "keyboard_arrow_up", "Вверх")}<span></span>
+            ${btn("left", "keyboard_arrow_left", "Влево")}
+            <button type="button" class="icon-btn" data-ptz="home" title="${esc(t("Домой"))}" aria-label="${esc(t("Домой"))}" ${dis}><span class="material-symbols-outlined">home</span></button>
+            ${btn("right", "keyboard_arrow_right", "Вправо")}
+            <span></span>${btn("down", "keyboard_arrow_down", "Вниз")}<span></span>
+          </div>
+          <div class="ptz-side">${btn("in", "zoom_in", "Приблизить")}${btn("out", "zoom_out", "Отдалить")}</div>
+        </div>
+        <div class="field">${t("Пресеты")}
+          <div class="presets">${PRESETS.map((p, i) => `<button type="button" class="chip" data-preset="${i}" ${dis}>${esc(t(p))}</button>`).join("")}</div>
+        </div>
+        <p class="note srvi"><span class="material-symbols-outlined">priority_high</span><span>${t("Приоритет СРВИ — выше максимального приоритета объекта. Пользователи объекта не управляют камерой, пока вы держите сессию.")} ${t("Пользователи объекта видят «Управление недоступно» без имени управляющего.")}</span></p>
+      </div>`;
+    }
+
+    function sideIntercept(c, s, r) {
+      if (!can("intercept")) {
+        return `<div class="section"><p class="note neutral"><span class="material-symbols-outlined">lock</span><span>${t("Перехват доступен роли «Старший оператор».")}</span></p></div>`;
+      }
+      const offlineNote = s.link === "offline" ? `<p class="note warn"><span class="material-symbols-outlined">signal_disconnected</span><span>${t("Объект не на связи: перехват выполнится, когда канал восстановится.")}</span></p>` : "";
+      const archiveBlock = `<div class="section stack"><h3><span class="material-symbols-outlined">move_down</span>${t("Перехват архива")}</h3>
+        <p class="muted" style="font-size:12px">${t("Фрагмент архива переносится в СРВИ и становится недоступен на объекте (п. 1.14).")}</p>
+        <button type="button" class="btn outline" id="openArchive"><span class="material-symbols-outlined">move_down</span>${t("Перехватить архив…")}</button>
+      </div>`;
+      if (r) {
+        const parts = [r.live && t("живое видео"), r.archive && t("архив"), r.ptz && t("PTZ")].filter(Boolean).join(", ");
+        return `<div class="section stack"><h3><span class="material-symbols-outlined">shield_lock</span>${t("Перехват действует")}</h3>
+          <dl class="kv">
+            <dt>${t("Отключено")}</dt><dd>${esc(parts)}</dd>
+            <dt>${t("Для кого")}</dt><dd>${t(r.who === "all" ? "все пользователи" : "ниже «Высокий»")}</dd>
+            <dt>${t("Действует до")}</dt><dd>${r.until ? fmtTime(r.until) : t("до снятия")}</dd>
+            <dt>${t("Основание")}</dt><dd>${esc(td(r.reason))}</dd>
+            <dt>${t("Инициатор")}</dt><dd>${esc(td(r.by))}</dd>
+            <dt>${t("Подмен в раскладках")}</dt><dd>${r.subs}</dd>
+          </dl>
+          <div class="row wrap">
+            <button type="button" class="btn outline small" data-extend="${r.id}"><span class="material-symbols-outlined">more_time</span>${t("Продлить на 1 час")}</button>
+            <button type="button" class="btn danger small" data-release="${r.id}"><span class="material-symbols-outlined">lock_open</span>${t("Снять перехват")}</button>
+          </div>
+          <button type="button" class="link-btn" style="font-size:12px;color:var(--srvi);align-self:flex-start" id="showSiteView">${t("Показать, что увидит объект")}</button>
+        </div>` + archiveBlock;
+      }
+      return `<div class="section stack">${offlineNote}<h3><span class="material-symbols-outlined">shield_lock</span>${t("Перехватить камеру")}</h3>
+        <div class="field">${t("Отключить пользователям объекта")}
+          <div class="checks">
+            <label><input type="checkbox" id="rLive" checked /> ${t("Живое видео (п. 1.12)")}</label>
+            <label><input type="checkbox" id="rArchive" /> ${t("Доступ к архиву (п. 1.13)")}</label>
+            <label><input type="checkbox" id="rPtz" ${c.type === "ptz" ? "checked" : "disabled"} /> ${t("Управление PTZ (п. 1.16)")}</label>
+          </div>
+        </div>
+        <div class="stack">
+          <label class="field">${t("Для кого")}
+            <select id="rWho"><option value="all">${t("Все пользователи объекта")}</option><option value="below">${t("Ниже уровня «Высокий»")}</option></select>
+          </label>
+          <label class="field">${t("Срок")}
+            <select id="rTerm"><option value="30">${t("30 минут")}</option><option value="60" selected>${t("1 час")}</option><option value="240">${t("4 часа")}</option><option value="0">${t("До снятия вручную")}</option></select>
+          </label>
+        </div>
+        <label class="field">${t("Основание")}
+          <textarea id="rReason" placeholder="${esc(t("Номер запроса или поручения — хранится только в СРВИ"))}"></textarea>
+        </label>
+        <p class="note srvi"><span class="material-symbols-outlined">swap_horiz</span><span>${t("Сейчас на объекте эту камеру смотрят {n} польз. В их раскладках она будет заменена другой доступной камерой в режиме живого видео (п. 1.17).", { n: c.viewers })}
+          <button type="button" class="link-btn" id="showSiteView">${t("Показать, что увидит объект")}</button></span></p>
+        <button type="button" class="btn srvi block" id="doIntercept"><span class="material-symbols-outlined">shield_lock</span>${t("Перехватить")}</button>
+      </div>` + archiveBlock;
+    }
+
+    function eventLabel(e) {
+      return t(e.kind === "hit" ? "Совпадение со списком контроля" : e.kind === "pass" ? "Проезд" : e.kind === "object" ? "Оставленный предмет" : e.kind === "crowd" ? "Скопление людей" : "Пересечение линии");
+    }
+    function eventIcon(e) {
+      return e.kind === "hit" ? "notification_important" : e.kind === "pass" ? "directions_car" : e.kind === "object" ? "luggage" : e.kind === "crowd" ? "groups" : "timeline";
+    }
+    function sideEvents() {
+      const inLayout = new Set(state.tiles.slice(0, state.layout).filter(Boolean));
+      const list = state.events.filter((e) => !state.layoutOnly || inLayout.has(e.cam)).slice(0, 40);
+      const rows = list.map((e) => `<li class="event" data-event="${e.id}">
+          <span class="ev-ico ${e.kind === "hit" ? "hit" : ""}"><span class="material-symbols-outlined">${eventIcon(e)}</span></span>
+          <div><strong>${esc(eventLabel(e))}</strong><span>${e.plate ? `<span class="plate">${esc(e.plate)}</span>` : ""}${esc(L(cam(e.cam).name))}</span></div>
+          <time>${fmtTime(e.at)}</time>
+        </li>`).join("");
+      return `<div class="section stack">
+          <label class="row" style="font-size:13px;gap:8px"><input type="checkbox" id="evLayoutOnly" ${state.layoutOnly ? "checked" : ""} />${t("Только камеры раскладки")}</label>
+          <p class="muted" style="font-size:12px">${t("Щёлкните событие — камера откроется в архиве на этот момент")}</p>
+        </div>
+        <ul class="events">${rows || `<li class="event"><span></span><span class="muted">${t("Нет событий")}</span></li>`}</ul>`;
+    }
+
+    function archStatusBadge(a) {
+      const map = {
+        copy: ["info", "Копирование в СРВИ"],
+        verify: ["info", "Сверка контрольных сумм"],
+        hidden: ["srvi", "Скрыт на объекте"],
+        removed: ["srvi", "Изъят с объекта"],
+        returning: ["warn", "Возврат на объект"],
+        returned: ["ok", "Возвращён"]
+      };
+      const [cls, label] = map[a.status];
+      return `<span class="badge ${cls}">${t(label)}</span>`;
+    }
+
+    function renderIntercepts() {
+      if (!can("intercept")) {
+        $("interceptsPage").innerHTML = noAccess("Раздел доступен роли «Старший оператор».");
+        return;
+      }
+      const rRows = state.restrictions.map((r) => {
+        const c = cam(r.cam);
+        const parts = [r.live && t("живое видео"), r.archive && t("архив"), r.ptz && t("PTZ")].filter(Boolean).join(", ");
+        return `<tr>
+          <td><strong>${esc(L(c.name))}</strong><span class="sub">${esc(L(site(c.site).name))}</span></td>
+          <td>${esc(parts)}</td>
+          <td>${t(r.who === "all" ? "все пользователи" : "ниже «Высокий»")}<span class="sub">${r.until ? fmtTime(r.until) : t("до снятия")}</span></td>
+          <td>${esc(td(r.reason))}<span class="sub">${esc(td(r.by))} · ${fmtTime(r.at)}</span></td>
+          <td>${r.subs}</td>
+          <td class="actions">
+            <button type="button" class="btn small" data-open="${r.cam}">${t("Открыть")}</button>
+            <button type="button" class="btn small" data-extend="${r.id}">${t("Продлить")}</button>
+            <button type="button" class="btn small danger" data-release="${r.id}">${t("Снять")}</button>
+          </td></tr>`;
+      }).join("");
+      const aRows = state.archives.map((a) => {
+        const c = cam(a.cam);
+        const busy = ["copy", "verify", "returning"].includes(a.status);
+        return `<tr>
+          <td><strong>${esc(L(c.name))}</strong><span class="sub">${esc(L(site(c.site).name))}</span></td>
+          <td>${toHHMM(a.from)}–${toHHMM(a.to)}</td>
+          <td>${t(a.mode === "hide" ? "скрытие" : "изъятие")}</td>
+          <td>${busy ? `<div class="progress"><div class="bar"><i style="width:${a.progress}%"></i></div><span>${Math.round(a.progress)}%</span></div><span class="sub">${archStatusBadge(a)}</span>` : archStatusBadge(a)}</td>
+          <td>${esc(td(a.reason))}<span class="sub">${esc(td(a.by))}</span></td>
+          <td class="actions">
+            <button type="button" class="btn small" data-open-archive="${a.id}">${t("Открыть")}</button>
+            ${["hidden", "removed"].includes(a.status) ? `<button type="button" class="btn small outline" data-return="${a.id}"><span class="material-symbols-outlined">undo</span>${t("Вернуть на объект")}</button>` : ""}
+          </td></tr>`;
+      }).join("");
+      $("interceptsPage").innerHTML = `
+        <div class="page-head"><div><h1>${t("Активные перехваты")}</h1><p>${t("Отключение живого видео, архива и PTZ для пользователей объектов. Основания и инициаторы хранятся только в СРВИ.")}</p></div></div>
+        <div class="card"><div class="card-h"><h2><span class="material-symbols-outlined">shield_lock</span>${t("Перехваты камер")}</h2></div>
+          <table class="table"><thead><tr><th>${t("Камера")}</th><th>${t("Что отключено")}</th><th>${t("Для кого / до")}</th><th>${t("Основание и инициатор")}</th><th>${t("Подмен в раскладках")}</th><th></th></tr></thead>
+          <tbody>${rRows || `<tr class="empty-row"><td colspan="6">${t("Нет активных перехватов")}</td></tr>`}</tbody></table></div>
+        <div class="card"><div class="card-h"><h2><span class="material-symbols-outlined">move_down</span>${t("Перехваты архива")}</h2></div>
+          <table class="table"><thead><tr><th>${t("Камера")}</th><th>${t("Период")}</th><th>${t("Режим")}</th><th>${t("Состояние")}</th><th>${t("Основание и инициатор")}</th><th></th></tr></thead>
+          <tbody>${aRows || `<tr class="empty-row"><td colspan="6">${t("Нет перехватов архива")}</td></tr>`}</tbody></table></div>`;
+    }
+
+    function jobTitle(j) {
+      return t(j.type === "backup" ? "Резервирование · {site}" : "Выборочная запись · {site}", { site: L(site(j.site).name) });
+    }
+    function jobStatus(j) {
+      const s = site(j.site);
+      if (s.link === "offline") return `<span class="badge neutral">${t("Нет связи с объектом ")}</span>`;
+      const map = { running: ["info", "Выполняется"], "paused-link": ["warn", "Пауза: канал занят живым видео"], waiting: ["neutral", "Ожидает окна передачи"], done: ["ok", "Готово"], paused: ["neutral", "Пауза"] };
+      const [cls, label] = map[j.status];
+      return `<span class="badge ${cls}">${t(label)}</span>`;
+    }
+    function renderJobs() {
+      if (!can("jobs")) {
+        $("jobsPage").innerHTML = noAccess("Раздел доступен ролям «Старший оператор» и «Администратор».");
+        return;
+      }
+      const sched = { night: "Ежедневно 01:00–06:00", always: "Круглосуточно", weekend: "Выходные дни" };
+      const rows = state.jobs.map((j) => `<tr>
+          <td><strong>${esc(jobTitle(j))}</strong><span class="sub">${t(j.type === "backup" ? "Резервирование" : "Выборочная запись")}</span></td>
+          <td>${j.cams === "all" ? t("все камеры") : esc(j.cams.map((id) => L(cam(id).name)).join(", "))}</td>
+          <td>${j.type === "backup" ? t(sched[j.schedule]) : t("сегодня {from}–{to}", { from: toHHMM(j.from), to: toHHMM(j.to) })}</td>
+          <td>${j.limit ? t("до {n} Мбит/с", { n: j.limit }) : t("без ограничения")}</td>
+          <td><div class="progress"><div class="bar ${j.status === "paused-link" ? "warn" : ""}"><i style="width:${j.progress}%"></i></div><span>${Math.round(j.progress)}%</span></div><span class="sub">${jobStatus(j)} · ${fmtNum(j.gb)} GB</span></td>
+          <td class="actions">${j.status === "done" || site(j.site).link === "offline" ? "" : `<button type="button" class="btn small" data-toggle-job="${j.id}">${t(j.status === "paused" ? "Продолжить" : "Приостановить")}</button>`}</td>
+        </tr>`).join("");
+      const used = 0.4 + state.jobs.reduce((a, j) => a + j.gb, 0) / 1000;
+      $("jobsPage").innerHTML = `
+        <div class="page-head"><div><h1>${t("Архив в СРВИ")}</h1><p>${t("Резервирование архива объектов и выборочная запись по камерам и периодам. Передача идёт через агента СРВИ на объекте, без объединения сетей.")}</p></div>
+          <button type="button" class="btn primary" id="newJob"><span class="material-symbols-outlined">add</span>${t("Новое задание")}</button></div>
+        <div class="card"><div class="card-h"><h2><span class="material-symbols-outlined">database</span>${t("Объём на сервере СРВИ")}</h2>
+          <div class="progress" style="min-width:320px"><div class="bar"><i style="width:${(used / 24) * 100}%"></i></div><span style="min-width:auto">${t("Использовано {used} ТБ из {total} ТБ", { used: fmtNum(used), total: 24 })}</span></div></div></div>
+        <div class="card"><div class="card-h"><h2><span class="material-symbols-outlined">cloud_sync</span>${t("Задания")}</h2></div>
+          <table class="table"><thead><tr><th>${t("Задание")}</th><th>${t("Камеры")}</th><th>${t("Расписание / период")}</th><th>${t("Скорость")}</th><th>${t("Ход")}</th><th></th></tr></thead>
+          <tbody>${rows || `<tr class="empty-row"><td colspan="6">${t("Нет заданий")}</td></tr>`}</tbody></table></div>`;
+    }
+
+    function renderAudit() {
+      if (!can("audit")) {
+        $("auditPage").innerHTML = noAccess("Журнал СРВИ доступен только роли «Аудитор» (п. 1.10).");
+        return;
+      }
+      const q = (state.auditQuery || "").toLowerCase();
+      const rows = [...state.audit].reverse().filter((e) => {
+        if (!q) return true;
+        return [td(e.user), t(e.action), auditObject(e.object), t(ROLES.find((r) => r.id === e.role).name)].join(" ").toLowerCase().includes(q);
+      }).map((e) => `<tr>
+          <td>${fmtTime(e.at, true)}</td>
+          <td><strong>${esc(td(e.user))}</strong><span class="sub">${esc(t(ROLES.find((r) => r.id === e.role).name))}</span></td>
+          <td>${esc(t(e.action))}</td>
+          <td>${esc(auditObject(e.object))}</td>
+          <td class="mono"><span class="faint">${e.prev}</span> → ${e.hash}</td>
+        </tr>`).join("");
+      $("auditPage").innerHTML = `
+        <div class="page-head"><div><h1>${t("Журнал СРВИ")}</h1><p>${t("Все действия в СРВИ. Записи только добавляются; каждая содержит хеш предыдущей, поэтому изменение или удаление записи обнаруживается.")}</p></div>
+          <div class="row"><span class="badge ok"><span class="material-symbols-outlined">verified</span>${t("Цепочка целостна")}</span>
+          <button type="button" class="btn outline" id="exportAudit"><span class="material-symbols-outlined">download</span>${t("Выгрузить")}</button></div></div>
+        <div class="row between"><div class="search-wrapper" style="width:420px"><span class="material-symbols-outlined">search</span><input type="search" id="auditSearch" value="${esc(state.auditQuery || "")}" placeholder="${esc(t("Поиск по пользователю, действию, камере..."))}" /></div>
+          <span class="muted">${t("Записей: {n}", { n: state.audit.length })}</span></div>
+        <div class="card"><table class="table"><thead><tr><th>${t("Время")}</th><th>${t("Пользователь")}</th><th>${t("Действие")}</th><th>${t("Объект")}</th><th>${t("Хеш")}</th></tr></thead>
+          <tbody>${rows || `<tr class="empty-row"><td colspan="5">${t("Ничего не найдено")}</td></tr>`}</tbody></table></div>`;
+    }
+
+    function noAccess(msg) {
+      return `<div class="no-access"><span class="material-symbols-outlined">lock</span><h3>${t("Нет доступа к разделу")}</h3><p>${t(msg)}</p></div>`;
+    }
+
+    function renderStatus() {
+      const streams = streamsBySite();
+      const total = Object.values(streams).reduce((a, s) => a + s.cams.length, 0);
+      const online = SITES.filter((s) => s.link !== "offline").length;
+      $("statusbar").innerHTML = `
+        <span><span class="material-symbols-outlined">lan</span>${t("Объекты на связи: {n} из {total}", { n: online, total: SITES.length })}</span>
+        <span><span class="material-symbols-outlined">stream</span>${t("Потоков с объектов: {n} — по одному на камеру для всех операторов СРВИ", { n: total })}</span>
+        <span><span class="material-symbols-outlined">shield_lock</span>${t("Активных перехватов: {n}", { n: state.restrictions.length + state.archives.filter((a) => a.status !== "returned").length })}</span>
+        <span class="grow"></span>
+        <span><span class="material-symbols-outlined">receipt_long</span>${t("Журнал СРВИ: {n} записей", { n: state.audit.length })}</span>
+        <span><span class="material-symbols-outlined">encrypted</span>${t("Агент СРВИ · канал TLS 1.3, mTLS")}</span>`;
+    }
+
+    function renderHelp() {
+      const rows = [
+        ["1.1, 1.2", "Отдельный контур: свои пользователи, роли, журнал. Полоса «Закрытый контур СРВИ» и роли в меню пользователя."],
+        ["1.4", "Живое видео, архив и события аналитики: Мониторинг → раскладка, режим «Архив», вкладка «События»."],
+        ["1.10", "Журнал СРВИ: виден только роли «Аудитор». Переключите роль в меню пользователя."],
+        ["1.11", "Только браузер: весь интерфейс — веб-страница."],
+        ["1.12, 1.13", "Карточка камеры → «Перехват»: живое видео, архив, PTZ для пользователей объекта."],
+        ["1.14, 1.15", "«Перехват архива…» в карточке камеры; возврат — раздел «Перехваты»."],
+        ["1.16", "Карточка камеры → «Управление»: приоритет СРВИ и закрепление сессии."],
+        ["1.17", "«Показать, что увидит объект» на вкладке «Перехват»."],
+        ["1.18", "Дерево объектов: независимые объекты, состояние канала каждого."],
+        ["1.19", "Полоса канала у объекта и строка состояния: один поток на камеру, только открытые камеры."],
+        ["1.20, 1.21", "Раздел «Архив в СРВИ»: резервирование и выборочная запись."],
+        ["1.22", "Сегменты в дереве: «Городской» и закрытый «Особый»."],
+        ["1.23", "Окно «Что видит оператор объекта»: на объекте нет записей и причин."]
+      ];
+      $("reqRows").innerHTML = rows.map(([n, text]) => `<tr><td>${n}</td><td>${esc(t(text))}</td></tr>`).join("");
+    }
+
+    function renderSiteView() {
+      const c = cam(state.selected);
+      const others = CAMERAS.filter((x) => x.site === c.site && x.id !== c.id && !restrictionOf(x.id));
+      const base = [c.id, ...others.slice(0, 3).map((x) => x.id)];
+      while (base.length < 4) base.push(null);
+      const free = CAMERAS.filter((x) => !base.includes(x.id) && !restrictionOf(x.id) && site(x.site).link !== "offline");
+      const replacement = free.find((x) => x.site === c.site) || free[seedOf(c.id) % free.length];
+      const after = base.map((id) => (id === c.id ? (replacement ? replacement.id : null) : id));
+      const mini = (ids, swapped) => `<div class="mini-grid">${ids.map((id, i) => id
+        ? tileHtml(id, i, { plain: true, mode: "live", cls: swapped && i === 0 ? "swapped" : "" })
+        : `<div class="tile empty"></div>`).join("")}</div>`;
+      $("siteViewNote").textContent = t("Камера «{cam}» перехвачена СРВИ. Слева — раскладка пользователя объекта до перехвата, справа — после.", { cam: L(c.name) });
+      $("siteViewBody").innerHTML = `
+        <figure>${mini(base, false)}<figcaption>${t("До перехвата")}</figcaption></figure>
+        <figure>${mini(after, true)}<figcaption>${t("После перехвата")} · ${replacement ? esc(t("Камера заменена на «{cam}»", { cam: L(replacement.name) })) : ""}</figcaption></figure>`;
+    }
+
+    /* ===================== Действия ===================== */
+    function toast(text, kind = "srvi", icon = "shield_lock") {
+      const el = document.createElement("div");
+      el.className = "toast " + kind;
+      el.innerHTML = `<span class="material-symbols-outlined">${icon}</span><span>${esc(text)}</span>`;
+      $("toasts").appendChild(el);
+      setTimeout(() => el.remove(), 4200);
+    }
+
+    function selectCam(id, place) {
+      state.selected = id;
+      if (place) {
+        const visible = state.tiles.slice(0, state.layout);
+        if (!visible.includes(id)) {
+          const empty = visible.indexOf(null);
+          let idx = empty;
+          if (idx < 0) {
+            state.nextTile = ((state.nextTile || 0) + 1) % state.layout;
+            idx = state.nextTile;
+          }
+          state.tiles[idx] = id;
+          log(state.mode === "archive" ? "Просмотр архива" : "Просмотр живого видео", { cam: id });
+          const st = streamsBySite()[cam(id).site];
+          if (st && st.overloaded) toast(t("Канал объекта перегружен: потоки переведены на низкое качество"), "warn", "network_check");
+        }
+      }
+      renderAll();
+    }
+
+    function doIntercept() {
+      const c = cam(state.selected);
+      const live = $("rLive").checked;
+      const archive = $("rArchive").checked;
+      const ptz = $("rPtz").checked;
+      const reason = $("rReason").value.trim();
+      if (!live && !archive && !ptz) { toast(t("Отметьте хотя бы один вид доступа."), "warn", "warning"); return; }
+      if (!reason) { toast(t("Укажите основание перехвата."), "warn", "warning"); $("rReason").focus(); return; }
+      const term = Number($("rTerm").value);
+      const r = { id: "r" + Date.now(), cam: c.id, live, archive, ptz, who: $("rWho").value, until: term ? Date.now() + term * MIN : 0, reason, by: "Смирнов А. В.", subs: live ? c.viewers : 0, at: Date.now() };
+      state.restrictions.push(r);
+      log("Перехват камеры", { cam: c.id });
+      toast(t("Камера перехвачена: {cam}. Подмен в раскладках объекта: {n}.", { cam: L(c.name), n: r.subs }));
+      renderAll();
+    }
+
+    function release(id) {
+      const r = state.restrictions.find((x) => x.id === id);
+      if (!r) return;
+      state.restrictions = state.restrictions.filter((x) => x.id !== id);
+      log("Снятие перехвата", { cam: r.cam });
+      toast(t("Перехват снят: {cam}. Доступ на объекте восстановлен.", { cam: L(cam(r.cam).name) }), "ok", "lock_open");
+      renderAll();
+    }
+    function extend(id) {
+      const r = state.restrictions.find((x) => x.id === id);
+      if (!r) return;
+      r.until = (r.until || Date.now()) + 60 * MIN;
+      log("Продление перехвата", { cam: r.cam });
+      toast(t("Перехват продлён до {time}", { time: fmtTime(r.until) }), "srvi", "more_time");
+      renderAll();
+    }
+
+    function openArchiveModal() {
+      const c = cam(state.selected);
+      $("archiveCamLabel").textContent = L(c.name) + " · " + L(site(c.site).name);
+      const end = Math.min(Date.now(), state.mode === "archive" ? state.archiveTime + 10 * MIN : Date.now() - 5 * MIN);
+      $("archFrom").value = toHHMM(end - 30 * MIN);
+      $("archTo").value = toHHMM(end);
+      $("archReason").value = "";
+      openModal("modalArchive");
+    }
+    function confirmArchive() {
+      const reason = $("archReason").value.trim();
+      if (!reason) { toast(t("Укажите основание перехвата."), "warn", "warning"); $("archReason").focus(); return; }
+      const from = atTime($("archFrom").value || "00:00");
+      let to = atTime($("archTo").value || "00:10");
+      if (to <= from) to = from + 10 * MIN;
+      const mode = document.querySelector("input[name=archMode]:checked").value;
+      const a = { id: "a" + Date.now(), cam: state.selected, from, to, mode, status: "copy", progress: 0, reason, by: "Смирнов А. В." };
+      state.archives.unshift(a);
+      log("Перехват архива ", { cam: a.cam, from, to });
+      closeModal("modalArchive");
+      toast(t("Перехват архива запущен: {cam}, {from}–{to}", { cam: L(cam(a.cam).name), from: toHHMM(from), to: toHHMM(to) }), "srvi", "move_down");
+      renderAll();
+    }
+    function returnArchive(id) {
+      const a = state.archives.find((x) => x.id === id);
+      if (!a) return;
+      a.status = "returning";
+      a.progress = a.mode === "hide" ? 90 : 0;
+      log("Возврат архива", { cam: a.cam, from: a.from, to: a.to });
+      renderAll();
+    }
+
+    function openJobModal() {
+      $("jobSite").innerHTML = SITES.filter((s) => s.link !== "offline").map((s) => `<option value="${s.id}">${esc(L(s.name))}</option>`).join("");
+      $("jobSite").value = cam(state.selected) && site(cam(state.selected).site).link !== "offline" ? cam(state.selected).site : "s1";
+      fillJobCams();
+      $("jobFrom").value = toHHMM(Date.now() - 3 * 60 * MIN);
+      $("jobTo").value = toHHMM(Date.now());
+      syncJobType();
+      openModal("modalJob");
+    }
+    function fillJobCams() {
+      const sid = $("jobSite").value;
+      $("jobCams").innerHTML = CAMERAS.filter((c) => c.site === sid).map((c) => `<label class="row" style="font-size:13px"><input type="checkbox" value="${c.id}" ${c.id === state.selected ? "checked" : ""} />${esc(L(c.name))}</label>`).join("");
+    }
+    function syncJobType() {
+      const backup = document.querySelector("input[name=jobType]:checked").value === "backup";
+      $("jobPeriod").hidden = backup;
+      $("jobScheduleField").hidden = !backup;
+    }
+    function confirmJob() {
+      const type = document.querySelector("input[name=jobType]:checked").value;
+      const cams = [...$("jobCams").querySelectorAll("input:checked")].map((i) => i.value);
+      if (!cams.length) { toast(t("Выберите хотя бы одну камеру."), "warn", "warning"); return; }
+      const sid = $("jobSite").value;
+      const all = cams.length === CAMERAS.filter((c) => c.site === sid).length;
+      const j = {
+        id: "j" + Date.now(), type, site: sid, cams: all ? "all" : cams,
+        schedule: $("jobSchedule").value, from: atTime($("jobFrom").value || "00:00"), to: atTime($("jobTo").value || "01:00"),
+        limit: Number($("jobLimit").value), status: type === "backup" && $("jobSchedule").value !== "always" ? "waiting" : "running", progress: 0, gb: 0
+      };
+      state.jobs.unshift(j);
+      log("Задание архива", { job: j.id });
+      closeModal("modalJob");
+      toast(t("Задание создано"), "ok", "cloud_sync");
+      renderAll();
+    }
+
+    function ptz(dir) {
+      const id = state.selected;
+      const v = state.ptzView[id] || { pan: 0, tilt: 0, zoom: 1 };
+      if (dir === "left") v.pan += 24;
+      if (dir === "right") v.pan -= 24;
+      if (dir === "up") v.tilt += 16;
+      if (dir === "down") v.tilt -= 16;
+      if (dir === "in") v.zoom = Math.min(2.2, v.zoom + 0.2);
+      if (dir === "out") v.zoom = Math.max(1, v.zoom - 0.2);
+      if (dir === "home") { v.pan = 0; v.tilt = 0; v.zoom = 1; }
+      state.ptzView[id] = v;
+      state.ptzActive = id;
+      renderStage();
+      renderSide();
+    }
+    function preset(i) {
+      const presets = [{ pan: 0, tilt: 0, zoom: 1.6 }, { pan: 60, tilt: -10, zoom: 1.4 }, { pan: 0, tilt: 0, zoom: 1 }, { pan: -50, tilt: 10, zoom: 1.8 }];
+      state.ptzView[state.selected] = { ...presets[i] };
+      state.ptzActive = state.selected;
+      renderStage();
+      renderSide();
+    }
+    function togglePtzLock() {
+      const id = state.selected;
+      if (state.ptzLock && state.ptzLock.cam === id && state.ptzLock.until > Date.now()) {
+        state.ptzLock = null;
+        log("Снятие закрепления PTZ", { cam: id });
+        toast(t("Закрепление снято"), "ok", "lock_open");
+      } else {
+        state.ptzLock = { cam: id, until: Date.now() + 30 * MIN };
+        state.ptzActive = id;
+        log("Закрепление PTZ", { cam: id });
+        toast(t("Управление закреплено до {time}", { time: fmtTime(state.ptzLock.until) }), "srvi", "lock");
+      }
+      renderSide();
+      renderStatus();
+    }
+
+    function openModal(id) {
+      $(id).hidden = false;
+      const f = $(id).querySelector("input, select, textarea, button");
+      if (f) f.focus();
+    }
+    function closeModal(id) { $(id).hidden = true; }
+
+    /* ===================== Таймеры ===================== */
+    function tick() {
+      $("clock").textContent = fmtTime(Date.now(), true);
+      let dirty = false;
+      state.archives.forEach((a) => {
+        if (a.status === "copy") {
+          a.progress = Math.min(100, a.progress + 9);
+          if (a.progress >= 100) { a.status = "verify"; a.progress = 0; }
+          dirty = true;
+        } else if (a.status === "verify") {
+          a.progress = Math.min(100, a.progress + 34);
+          if (a.progress >= 100) {
+            a.status = a.mode === "hide" ? "hidden" : "removed";
+            a.progress = 100;
+            toast(t(a.mode === "hide" ? "Фрагмент {cam} {from}–{to} скрыт на объекте" : "Фрагмент {cam} {from}–{to} изъят с объекта", { cam: L(cam(a.cam).name), from: toHHMM(a.from), to: toHHMM(a.to) }), "srvi", "shield_lock");
+          }
+          dirty = true;
+        } else if (a.status === "returning") {
+          a.progress = Math.min(100, a.progress + 10);
+          if (a.progress >= 100) {
+            a.status = "returned";
+            toast(t("Фрагмент возвращён на объект, доступ восстановлен"), "ok", "undo");
+          }
+          dirty = true;
+        }
+      });
+      state.jobs.forEach((j) => {
+        if (j.status === "running" && site(j.site).link !== "offline") {
+          j.progress = Math.min(100, j.progress + 1.5);
+          j.gb += 0.12 * (j.limit || 4);
+          if (j.progress >= 100) j.status = "done";
+          dirty = true;
+        }
+      });
+      const now = Date.now();
+      const expired = state.restrictions.filter((r) => r.until && r.until <= now);
+      if (expired.length) {
+        state.restrictions = state.restrictions.filter((r) => !expired.includes(r));
+        expired.forEach((r) => log("Снятие перехвата", { cam: r.cam }, "Система"));
+        dirty = true;
+      }
+      if (state.mode === "archive" && state.playing) {
+        state.archiveTime = Math.min(now, state.archiveTime + 1000);
+        $("tlTime").textContent = fmtTime(state.archiveTime, true);
+        $("tlCursor").style.left = ((state.archiveTime - dayStart()) / (24 * 60 * MIN)) * 100 + "%";
+      }
+      if (state.mode === "live" || state.playing) {
+        document.querySelectorAll("#grid .hud.bottom span:last-child").forEach((el) => {
+          if (el.textContent) el.textContent = fmtTime(state.mode === "archive" ? state.archiveTime : now, true);
+        });
+      }
+      if (dirty) {
+        renderNav();
+        if (state.view === "intercepts") renderIntercepts();
+        if (state.view === "jobs") renderJobs();
+        renderStatus();
+      }
+    }
+
+    function newEvent() {
+      const lpr = CAMERAS.filter((c) => c.type === "lpr" && site(c.site).link !== "offline");
+      const c = lpr[Math.floor(Math.random() * lpr.length)];
+      const plate = PLATES[Math.floor(Math.random() * PLATES.length)];
+      const e = { id: "e" + Date.now(), cam: c.id, kind: WATCH.has(plate) ? "hit" : "pass", plate, at: Date.now() };
+      state.events.unshift(e);
+      state.events = state.events.slice(0, 80);
+      if (e.kind === "hit" && can("monitor")) toast(t("Совпадение со списком контроля: {plate}, {cam}", { plate, cam: L(c.name) }), "warn", "notification_important");
+      if (state.view === "monitor" && state.tab === "events") renderSide();
+    }
+
+    /* ===================== События интерфейса ===================== */
+    function bind() {
+      $("nav").addEventListener("click", (ev) => {
+        const b = ev.target.closest(".nav-btn");
+        if (!b) return;
+        state.view = b.dataset.view;
+        renderAll();
+      });
+      $("langSelect").addEventListener("change", (ev) => applyLang(ev.target.value));
+      $("themeToggle").addEventListener("click", () => applyTheme(state.theme === "light" ? "dark" : "light"));
+      $("helpBtn").addEventListener("click", () => { renderHelp(); openModal("modalHelp"); });
+
+      const pop = document.querySelector("#userMenu .menu-pop");
+      $("userBtn").addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        pop.hidden = !pop.hidden;
+        $("userBtn").setAttribute("aria-expanded", String(!pop.hidden));
+      });
+      document.addEventListener("click", (ev) => {
+        if (!ev.target.closest("#userMenu")) { pop.hidden = true; $("userBtn").setAttribute("aria-expanded", "false"); }
+      });
+      $("roleItems").addEventListener("click", (ev) => {
+        const b = ev.target.closest("[data-role]");
+        if (!b) return;
+        state.role = b.dataset.role;
+        log("Смена роли (демо)", { role: state.role });
+        pop.hidden = true;
+        renderAll();
+      });
+      $("resetDemo").addEventListener("click", () => {
+        const { theme } = state;
+        state = seedState();
+        state.theme = theme;
+        seedAudit();
+        log("Сброс демо-данных");
+        pop.hidden = true;
+        toast(t("Демо-данные сброшены"), "ok", "restart_alt");
+        renderAll();
+      });
+
+      $("treeSearch").addEventListener("input", renderTree);
+      $("tree").addEventListener("click", (ev) => {
+        const s = ev.target.closest("[data-site]");
+        if (s) { state.openSites[s.dataset.site] = !state.openSites[s.dataset.site]; renderTree(); return; }
+        const c = ev.target.closest("[data-cam]");
+        if (c) {
+          const visible = state.tiles.slice(0, state.layout);
+          if (visible.includes(c.dataset.cam) && state.selected === c.dataset.cam) toast(t("Камера уже в раскладке"), "ok", "info");
+          selectCam(c.dataset.cam, true);
+        }
+      });
+      $("grid").addEventListener("click", (ev) => {
+        const tile = ev.target.closest(".tile");
+        if (!tile || !tile.dataset.cam) return;
+        selectCam(tile.dataset.cam, false);
+      });
+      $("layoutSeg").addEventListener("click", (ev) => {
+        const b = ev.target.closest("[data-layout]");
+        if (!b) return;
+        state.layout = Number(b.dataset.layout);
+        if (state.layout === 1 && state.selected) state.tiles[0] = state.selected;
+        renderAll();
+      });
+      $("modeSeg").addEventListener("click", (ev) => {
+        const b = ev.target.closest("[data-mode]");
+        if (!b) return;
+        state.mode = b.dataset.mode;
+        state.playing = false;
+        if (state.mode === "archive" && state.selected) log("Просмотр архива", { cam: state.selected });
+        renderAll();
+      });
+      $("tlPlay").addEventListener("click", () => { state.playing = !state.playing; renderStage(); });
+      $("tlTrack").addEventListener("click", (ev) => {
+        const rect = $("tlTrack").getBoundingClientRect();
+        const ratio = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width));
+        state.archiveTime = Math.min(Date.now(), dayStart() + ratio * 24 * 60 * MIN);
+        renderStage();
+      });
+      $("sideSeg").addEventListener("click", (ev) => {
+        const b = ev.target.closest("[data-tab]");
+        if (!b) return;
+        state.tab = b.dataset.tab;
+        renderSide();
+      });
+      $("sideBody").addEventListener("click", (ev) => {
+        const p = ev.target.closest("[data-ptz]");
+        if (p) return ptz(p.dataset.ptz);
+        const pr = ev.target.closest("[data-preset]");
+        if (pr) return preset(Number(pr.dataset.preset));
+        if (ev.target.closest("#ptzLockBtn")) return togglePtzLock();
+        if (ev.target.closest("#doIntercept")) return doIntercept();
+        if (ev.target.closest("#openArchive")) return openArchiveModal();
+        if (ev.target.closest("#showSiteView")) { renderSiteView(); return openModal("modalSiteView"); }
+        const rel = ev.target.closest("[data-release]");
+        if (rel) return release(rel.dataset.release);
+        const ext = ev.target.closest("[data-extend]");
+        if (ext) return extend(ext.dataset.extend);
+        const e = ev.target.closest("[data-event]");
+        if (e) {
+          const evt = state.events.find((x) => x.id === e.dataset.event);
+          state.mode = "archive";
+          state.archiveTime = evt.at - 10 * 1000;
+          state.playing = false;
+          selectCam(evt.cam, true);
+          log("Просмотр архива", { cam: evt.cam });
+        }
+      });
+      $("sideBody").addEventListener("change", (ev) => {
+        if (ev.target.id === "evLayoutOnly") { state.layoutOnly = ev.target.checked; renderSide(); }
+      });
+
+      $("interceptsPage").addEventListener("click", (ev) => {
+        const rel = ev.target.closest("[data-release]");
+        if (rel) return release(rel.dataset.release);
+        const ext = ev.target.closest("[data-extend]");
+        if (ext) return extend(ext.dataset.extend);
+        const ret = ev.target.closest("[data-return]");
+        if (ret) return returnArchive(ret.dataset.return);
+        const op = ev.target.closest("[data-open]");
+        if (op) { state.view = "monitor"; state.tab = "intercept"; return selectCam(op.dataset.open, true); }
+        const oa = ev.target.closest("[data-open-archive]");
+        if (oa) {
+          const a = state.archives.find((x) => x.id === oa.dataset.openArchive);
+          state.view = "monitor";
+          state.mode = "archive";
+          state.archiveTime = a.from + 2 * MIN;
+          return selectCam(a.cam, true);
+        }
+      });
+      $("jobsPage").addEventListener("click", (ev) => {
+        if (ev.target.closest("#newJob")) return openJobModal();
+        const tg = ev.target.closest("[data-toggle-job]");
+        if (tg) {
+          const j = state.jobs.find((x) => x.id === tg.dataset.toggleJob);
+          j.status = j.status === "paused" ? "running" : "paused";
+          renderJobs();
+        }
+      });
+      $("auditPage").addEventListener("input", (ev) => {
+        if (ev.target.id !== "auditSearch") return;
+        state.auditQuery = ev.target.value;
+        const pos = ev.target.selectionStart;
+        renderAudit();
+        const inp = $("auditSearch");
+        inp.focus();
+        inp.setSelectionRange(pos, pos);
+      });
+      $("auditPage").addEventListener("click", (ev) => {
+        if (ev.target.closest("#exportAudit")) toast(t("Выгрузка журнала подписывается ключом СРВИ (в прототипе не выполняется)."), "ok", "download");
+      });
+
+      $("archConfirm").addEventListener("click", confirmArchive);
+      $("jobConfirm").addEventListener("click", confirmJob);
+      $("jobSite").addEventListener("change", fillJobCams);
+      document.querySelectorAll("input[name=jobType]").forEach((r) => r.addEventListener("change", syncJobType));
+      document.querySelectorAll("[data-close]").forEach((b) => b.addEventListener("click", () => closeModal(b.dataset.close)));
+      document.querySelectorAll(".modal").forEach((m) => m.addEventListener("click", (ev) => { if (ev.target === m) closeModal(m.id); }));
+      document.addEventListener("keydown", (ev) => {
+        if (ev.key === "Escape") document.querySelectorAll(".modal:not([hidden])").forEach((m) => closeModal(m.id));
+      });
+    }
+
+    /* ===================== Запуск ===================== */
+    collectStatic();
+    let savedTheme = "dark";
+    let savedLang = "ru";
+    try {
+      savedTheme = localStorage.getItem("srvi-theme") || "dark";
+      savedLang = localStorage.getItem("srvi-lang") || "ru";
+    } catch (e) { /* приватный режим */ }
+    state.theme = savedTheme;
+    bind();
+    applyLang(savedLang);
+    tick();
+    setInterval(tick, 1000);
+    setInterval(newEvent, 9000);
+  })();
+  </script>
+</body>
+</html>
